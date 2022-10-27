@@ -17,7 +17,7 @@ public class DañoArmaMELEE : MonoBehaviour
 
 
     }
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemigo1")
         {
@@ -27,6 +27,6 @@ public class DañoArmaMELEE : MonoBehaviour
         {
             other.GetComponent<VidaEnemigos>().VIdaEnemigo2(daño);
         }
-    }
+    }*/
 
 }
