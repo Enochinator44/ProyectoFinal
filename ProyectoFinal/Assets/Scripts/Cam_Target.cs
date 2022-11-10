@@ -15,6 +15,6 @@ public class Cam_Target : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = (jugador.transform.position - enemigo.transform.position)/2;
     }
 }
