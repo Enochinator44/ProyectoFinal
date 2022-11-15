@@ -140,7 +140,11 @@ public class ContT : MonoBehaviour
         {
             Run = true;
             velocidadmodificada = 3f;
-            playerAnimatorController.SetBool("PlayerRun", Run);
+            playerAnimatorController.SetBool("PlayerRun", Run); 
+
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
 
         }
         else
@@ -182,7 +186,7 @@ public class ContT : MonoBehaviour
             playerAnimatorController.SetFloat("PlayerVerticalVelocity", player.velocity.y);
         }
 
-        playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
+        //playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
 
         SlideDown();
     }
@@ -227,6 +231,16 @@ public class ContT : MonoBehaviour
             //SceneManager.LoadScene(0);
             muerto = false;
         }
+    }
+
+    void Dash()
+    {
+        //Vector3 forceToApply
+    }
+
+    void ResetDash()
+    {
+
     }
 
 
