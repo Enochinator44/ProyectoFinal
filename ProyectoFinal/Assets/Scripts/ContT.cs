@@ -235,10 +235,7 @@ public class ContT : MonoBehaviour
         }
     }
 
-    void Dash()
-    {
-        StartCoroutine(DashCoroutine());
-    }
+   
 
     private IEnumerator DashCoroutine()
     {
