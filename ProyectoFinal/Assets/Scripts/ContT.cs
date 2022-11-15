@@ -15,6 +15,8 @@ public class ContT : MonoBehaviour
     private bool Run;
     private bool left;
     private bool right;
+    public float dashtime=0.5f;
+    public float dashSpeed=5;
    
 
     private bool muerto;
@@ -117,13 +119,13 @@ public class ContT : MonoBehaviour
 
     public void PlayerSkills()
     {
-        if (player.isGrounded && Input.GetButtonDown("Jump"))
-        {
-            fallVelocity = jumpForce;
-            movPlayer.y = fallVelocity;
-            playerAnimatorController.SetTrigger("PlayerJump");
+        //if (player.isGrounded && Input.GetButtonDown("Jump"))
+        //{
+        //    fallVelocity = jumpForce;
+        //    movPlayer.y = fallVelocity;
+        //    playerAnimatorController.SetTrigger("PlayerJump");
 
-        }
+        //}
         if (player.isGrounded && Input.GetKeyDown(KeyCode.Alpha1))
         {
             
@@ -145,7 +147,7 @@ public class ContT : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
+            StartCoroutine(DashCoroutine());
         }
         else
         {
@@ -235,12 +237,25 @@ public class ContT : MonoBehaviour
 
     void Dash()
     {
-        //Vector3 forceToApply
+        StartCoroutine(DashCoroutine());
     }
 
-    void ResetDash()
+    private IEnumerator DashCoroutine()
     {
 
+        player.enabled = false;
+
+        while (dashtime > 0)
+        {
+            Vector3  v = new Vector3(horizontalMove, 0, verticalMove);
+            transform.Translate( v.normalized* (dashSpeed * 2) * Time.deltaTime, Space.World);
+            dashtime -= Time.deltaTime;
+            
+            yield return null;
+        }
+
+        dashtime = 0.3f;
+        player.enabled = true;
     }
 
 
