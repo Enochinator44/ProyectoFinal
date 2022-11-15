@@ -22,7 +22,7 @@ public class Camera : MonoBehaviour
 
         distJugadorAenemigo = Vector3.Magnitude(jugador.transform.position - enemigo.transform.position);
        
-        transform.position = new Vector3(transform.position.x, 1 + (0.3f*distJugadorAenemigo), 1 + (-1 * distJugadorAenemigo));
+        transform.position = new Vector3(transform.position.x, 1 + (1f*distJugadorAenemigo), 1 + (-2f * distJugadorAenemigo));
       
 
     }
