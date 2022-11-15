@@ -1,13 +1,15 @@
   using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemigo : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject ProyectilF, ProyectilActual, Player , movEnem1 , movEnem2;
+    public GameObject ProyectilF, ProyectilActual, Player;
     public float speedEnem;
-    
+    public GameObject[] movEnem;
+    public NavMeshAgent agente;
     
     public int VelocidadL, VelocidadR;
     
@@ -20,8 +22,13 @@ public class Enemigo : MonoBehaviour
     void Update()
     {
         transform.LookAt(Player.transform);
+        for (int i = 0; i < movEnem.Length; i++)
+        {
+            agente.SetDestination(movEnem[i].transform.position);
+        }
+       
 
-        transform.Translate(movEnem1.transform.position * speedEnem *Time.deltaTime);
+       
     }
     private IEnumerator Proyectil1()
     {
