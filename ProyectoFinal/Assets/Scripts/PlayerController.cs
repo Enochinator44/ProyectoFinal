@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
         PlayerSkills();
 
-        player.Move(movPlayer * Time.deltaTime);
+        player.Move(movPlayer * Time.unscaledDeltaTime);
 
 
 

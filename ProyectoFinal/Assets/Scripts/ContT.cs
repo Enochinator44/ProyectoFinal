@@ -17,6 +17,8 @@ public class ContT : MonoBehaviour
     private bool right;
     public float dashtime=0.5f;
     public float dashSpeed=5;
+    public TimeManager timeManager;
+    
    
 
     private bool muerto;
@@ -60,7 +62,7 @@ public class ContT : MonoBehaviour
     {
         player = GetComponent<CharacterController>();
 
-        Cursor.lockState = CursorLockMode.Locked; //cursor del mouse no salga del juego. si en vez de usar .locked usas .none el cursor puede moverse perono tiene captura 
+        Cursor.lockState = CursorLockMode.Locked;
         
         playerAnimatorController = GetComponent<Animator>();
         
@@ -76,6 +78,8 @@ public class ContT : MonoBehaviour
 
         playerInput = new Vector3(horizontalMove, 0, verticalMove);
         playerInput = Vector3.ClampMagnitude(playerInput, 1);
+
+       
 
         playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * playerSpeed);
 
@@ -95,7 +99,7 @@ public class ContT : MonoBehaviour
         PlayerSkills();
 
         player.Move(movPlayer * Time.deltaTime);
-
+        
 
 
 
@@ -163,6 +167,10 @@ public class ContT : MonoBehaviour
         {
             velocidadmodificada = 1;
         }
+        if (Input.GetKey(KeyCode.T))
+        {
+            timeManager.SlowMotion();
+        }
         /*if(Input.GetKeyDown(KeyCode.Space) && trepar == true)
         {
             Animacion;
@@ -206,7 +214,7 @@ public class ContT : MonoBehaviour
         }
     }
 
-
+    
 
     private void OnControllerColliderHit(ControllerColliderHit hit) //detecta cuando el xharacter controller colisiona con otro objeto pero no al contrario 
     {
@@ -245,8 +253,8 @@ public class ContT : MonoBehaviour
         while (dashtime > 0)
         {
             Vector3  v = new Vector3(horizontalMove, 0, verticalMove);
-            transform.Translate( v.normalized* (dashSpeed * 2) * Time.deltaTime, Space.World);
-            dashtime -= Time.deltaTime;
+            transform.Translate( v.normalized* (dashSpeed * 2) * Time.unscaledDeltaTime, Space.World);
+            dashtime -= Time.unscaledDeltaTime;
             
             yield return null;
         }
