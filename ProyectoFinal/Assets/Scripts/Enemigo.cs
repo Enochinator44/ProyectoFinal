@@ -25,6 +25,7 @@ public class Enemigo : MonoBehaviour
         for (int i = 0; i < movEnem.Length; i++)
         {
             agente.SetDestination(movEnem[i].transform.position);
+           
         }
        
 

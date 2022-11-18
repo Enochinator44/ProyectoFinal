@@ -18,7 +18,8 @@ public class ContT : MonoBehaviour
     public float dashtime=0.5f;
     public float dashSpeed=5;
     public TimeManager timeManager;
-    
+
+    public Camera cameraShake;
    
 
     private bool muerto;
@@ -98,7 +99,7 @@ public class ContT : MonoBehaviour
 
         PlayerSkills();
 
-        player.Move(movPlayer * Time.deltaTime);
+        player.Move(movPlayer * Time.unscaledDeltaTime);
         
 
 
@@ -130,9 +131,10 @@ public class ContT : MonoBehaviour
         //    playerAnimatorController.SetTrigger("PlayerJump");
 
         //}
-        if (player.isGrounded && Input.GetKeyDown(KeyCode.Alpha1))
+        if (/*player.isGrounded &&*/ Input.GetKeyDown(KeyCode.Alpha1))
         {
-            
+            Debug.Log("shake");
+            StartCoroutine(cameraShake.Shake(.15f , 4f));
             AtaqueMelee = true;
             AtaqueRango = false;
         }
@@ -167,7 +169,7 @@ public class ContT : MonoBehaviour
         {
             velocidadmodificada = 1;
         }
-        if (Input.GetKey(KeyCode.T))
+        if (Input.GetKey(KeyCode.T) && Time.timeScale==1)
         {
             timeManager.SlowMotion();
         }

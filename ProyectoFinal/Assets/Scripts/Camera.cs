@@ -26,4 +26,24 @@ public class Camera : MonoBehaviour
       
 
     }
+
+     public IEnumerator Shake(float duracion , float magnitude)
+    {
+        Vector3 posOriginal = transform.localPosition;
+
+        float elapsed = 0.0f;
+
+        while (elapsed< duracion)
+        {
+            float x = Random.Range(-1f, 1f)*magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            transform.localPosition = new Vector3(x, y, posOriginal.z);
+
+            elapsed += Time.unscaledDeltaTime;
+
+            yield return null;
+        }
+        transform.localPosition = posOriginal;
+    }
 }
