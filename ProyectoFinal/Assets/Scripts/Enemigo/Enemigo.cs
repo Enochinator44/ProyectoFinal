@@ -30,7 +30,7 @@ public class Enemigo : MonoBehaviour
            
         }
 
-        if (timing < 5)
+        if (timing > 5)
         {
             StartCoroutine("Proyectil1");
             timing = 0;
@@ -43,8 +43,8 @@ public class Enemigo : MonoBehaviour
     }
     private IEnumerator Proyectil1()
     {
-        ProyectilActual = Instantiate(ProyectilF, transform);
-        ProyectilActual.transform.Translate(Vector3.forward*VelocidadL*Time.deltaTime, Space.Self);
+        ProyectilActual = Instantiate(ProyectilF, transform.position, transform.localRotation);
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1; 
 
         yield return null;
     }
