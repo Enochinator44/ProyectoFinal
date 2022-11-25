@@ -18,12 +18,25 @@ public class Camera : MonoBehaviour
     void Update()
     {
 
+        //Transform aux = target.transform;
+
+        //aux.position = new Vector3(aux.position.x, aux.position.y, aux.position.z);
+
+        //transform.LookAt(aux);
+
+
+        //transform.LookAt(target.transform, target.transform.up);
+
         transform.LookAt(target.transform);
 
         distJugadorAenemigo = Vector3.Magnitude(jugador.transform.position - enemigo.transform.position);
+
+        float ajuste = Mathf.Clamp(distJugadorAenemigo, 10, 25);
        
-        transform.position = new Vector3(transform.position.x, 1 + (1f*distJugadorAenemigo), 1 + (-2f * distJugadorAenemigo));
-      
+        transform.position = new Vector3(transform.position.x, ajuste , transform.position.z);
+
+        //transform.position = new Vector3(transform.position.x, 1 + (1f * distJugadorAenemigo), 1 + (-2f * distJugadorAenemigo));
+
 
     }
 

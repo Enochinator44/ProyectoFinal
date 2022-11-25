@@ -84,14 +84,14 @@ public class ContT : MonoBehaviour
 
         playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * playerSpeed);
 
-        camDirection();
+        //camDirection();
 
-        movPlayer = playerInput.x * camRight + playerInput.z * camForward;
+        movPlayer = playerInput.x * transform.right + playerInput.z * transform.forward;
         movPlayer += movPlayer * playerSpeed * velocidadmodificada;
 
 
 
-        player.transform.LookAt(player.transform.position + movPlayer);
+        //player.transform.LookAt(player.transform.position + movPlayer);
         //Quaternion toRotation = Quaternion.FromToRotation(camForward, player.transform.position + movPlayer);
         //transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 1);
 
@@ -99,7 +99,13 @@ public class ContT : MonoBehaviour
 
         PlayerSkills();
 
-        player.Move(movPlayer * Time.unscaledDeltaTime);
+        //player.Move(movPlayer * Time.unscaledDeltaTime);
+        player.SimpleMove(playerInput * playerSpeed);
+        
+        
+
+       
+
         
 
 
