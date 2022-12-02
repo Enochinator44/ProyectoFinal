@@ -6,7 +6,7 @@ public class Camera : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public GameObject target, jugador,enemigo;
+    public GameObject target, jugador,enemigo,Aim;
     public float distJugadorAenemigo;
     
     void Start()
@@ -31,9 +31,11 @@ public class Camera : MonoBehaviour
 
         distJugadorAenemigo = Vector3.Magnitude(jugador.transform.position - enemigo.transform.position);
 
-        float ajuste = Mathf.Clamp(distJugadorAenemigo, 10, 25);
+        float ajuste = Mathf.Clamp(distJugadorAenemigo, 5, 40);
+        float ajusteZ = Mathf.Clamp(distJugadorAenemigo, 3, 60);
+        Vector3 v = new Vector3(Aim.transform.position.x, 0, 0);
        
-        transform.position = new Vector3(transform.position.x, ajuste , transform.position.z);
+        transform.position = new Vector3(v.magnitude , ajuste,(-1.5f*ajusteZ));
 
         //transform.position = new Vector3(transform.position.x, 1 + (1f * distJugadorAenemigo), 1 + (-2f * distJugadorAenemigo));
 

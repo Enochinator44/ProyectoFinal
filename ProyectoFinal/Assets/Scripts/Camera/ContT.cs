@@ -47,10 +47,9 @@ public class ContT : MonoBehaviour
   
 
     float velocidadmodificada;
-    private bool trepar = false;
+    public bool ataque1, ataque2, ataque3;
+   
 
-    private bool AtaqueMelee,
-    AtaqueRango;
 
     //Variables Animacion
 
@@ -66,7 +65,9 @@ public class ContT : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         
         playerAnimatorController = GetComponent<Animator>();
-        
+        ataque1 = true;
+        ataque2 = false;
+        ataque3 = false;
 
     }
 
@@ -137,19 +138,17 @@ public class ContT : MonoBehaviour
         //    playerAnimatorController.SetTrigger("PlayerJump");
 
         //}
-        if (/*player.isGrounded &&*/ Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Debug.Log("shake");
-            StartCoroutine(cameraShake.Shake(.15f , 4f));
-            AtaqueMelee = true;
-            AtaqueRango = false;
-        }
-        if (player.isGrounded && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-           
-            AtaqueMelee = false;
-            AtaqueRango = true;
-        }
+        //if (/*player.isGrounded &&*/ Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    Debug.Log("shake");
+        //    StartCoroutine(cameraShake.Shake(.15f , 4f));
+
+        //}
+        //if (player.isGrounded && Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+
+        AtaquesBasicos(); 
+        //}
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Run = true;
@@ -221,6 +220,34 @@ public class ContT : MonoBehaviour
             movPlayer.y += slopeForceDown;
         }
     }
+   
+    void AtaquesBasicos()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0)&& ataque1==true && ataque2 ==false &&ataque3 ==false)
+        {
+            Debug.Log("ATAQUE1");
+            ataque1 = false;
+            StartCoroutine(Ataque1_TiempoAnimacion());
+        }
+        if (ataque1==false&&ataque2==true&& ataque3 ==false &&Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Debug.Log("ATAQUE2");
+            ataque2 = false;
+            StartCoroutine(Ataque2_TiempoAnimacion2());
+            
+            ataque1 = false;
+            
+        }
+        if (ataque1==false &&ataque2==false && ataque3==true && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Debug.Log("ATAQUE3");
+            ataque3 = false;
+            StartCoroutine(Ataque3_TiempoAnimacion3());
+            
+        }
+
+
+    }
 
     
 
@@ -230,10 +257,7 @@ public class ContT : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Ventana")
-        {
-            trepar = true;
-        }
+     
     }
 
     private void OnAnimatorMove()
@@ -270,6 +294,42 @@ public class ContT : MonoBehaviour
         dashtime = 0.3f;
         player.enabled = true;
     }
+    IEnumerator Ataque1_TiempoAnimacion()
+    {
+        yield return new WaitForSeconds(1.5f);
+        ataque2 = true;
+        yield return new WaitForSeconds(2f);
+        ataque2 = false;
+        ataque1 = true;
+    }
+    IEnumerator Ataque2_TiempoAnimacion2()
+    {
+        yield return new WaitForSeconds(1.5f);
+        ataque3 = true;
+        
+        yield return new WaitForSeconds(2f);
+        ataque2 = false;
+        ataque3 = false;
+    }
+    IEnumerator Ataque3_TiempoAnimacion3()
+    {
+        yield return new WaitForSeconds(1.5f);
+        ataque1 = true;
+    }
+
+    // public void CancelarAtaques()
+    //{
+    //    float tiempoAcumulado = 0;
+    //    float tiempoMaximo = tiempoAcumulado += Time.deltaTime;
+    //    if (tiempoMaximo >= 3)
+    //    {
+    //        ataque1 = true;
+    //        ataque2 = false;
+    //        ataque3 = false;
+    //    }
+    //    yield return new WaitForSeconds(0);
+    //}
+   
 
 
 
