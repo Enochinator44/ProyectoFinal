@@ -2585,10 +2585,10 @@ MonoBehaviour:
   slideVelocity: 0
   slopeForceDown: 0
   conArma: 0
-  ataque1: 0
-  ataque2: 0
-  ataque3: 0
-  playerAnimatorController: {fileID: 0}
+  ataque1: 1
+  ataque2: 1
+  ataque3: 1
+  playerAnimatorController: {fileID: 1759787867}
 --- !u!143 &1759787862
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2641,7 +2641,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 778e9f049254ee141b6118cbd20d5118, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2697,7 +2697,7 @@ Animator:
   m_GameObject: {fileID: 1759787860}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 713b772b1d0f74133a8ce94956352a48, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5846ff236d3c1d14e81e315ae8fdbb95, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
