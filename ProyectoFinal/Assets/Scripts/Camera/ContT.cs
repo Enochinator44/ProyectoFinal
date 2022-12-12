@@ -47,7 +47,7 @@ public class ContT : MonoBehaviour
   
 
     float velocidadmodificada;
-    public bool ataque1, ataque2, ataque3;
+    public bool ataque1, ataque2, ataque3,sigAtaque;
    
 
 
@@ -227,29 +227,36 @@ public class ContT : MonoBehaviour
         {
             Debug.Log("ATAQUE1");
             playerAnimatorController.SetBool("Ataque1", true);
-            ataque1 = false;
             
-            StartCoroutine(Ataque1_TiempoAnimacion());
+            ataque1 = false;
+            ataque2=true;
+
+            //StartCoroutine(Ataque1_TiempoAnimacion());
+            CancelarAtaques();
         }
-        if (ataque1==false&&ataque2==true&& ataque3 ==false &&Input.GetKeyDown(KeyCode.Mouse0))
+        if (sigAtaque ==true&& ataque1==false&&ataque2==true&& ataque3 ==false &&Input.GetKeyDown(KeyCode.Mouse0))
         {
             Debug.Log("ATAQUE2");
+            
             playerAnimatorController.SetBool("Ataque2", true);
             
             ataque2 = false;
-            StartCoroutine(Ataque2_TiempoAnimacion2());
-            
+            ataque3 = true;
+            //StartCoroutine(Ataque2_TiempoAnimacion2());
+            CancelarAtaques();
             ataque1 = false;
             
         }
-        if (ataque1==true &&ataque2==false && ataque3==true && Input.GetKeyDown(KeyCode.Mouse0))
+        if (sigAtaque==true&& ataque1==false &&ataque2==false && ataque3==true && Input.GetKeyDown(KeyCode.Mouse0))
         {
             Debug.Log("ATAQUE3");
             playerAnimatorController.SetBool("Ataque3", true);
-            playerAnimatorController.SetBool("Ataque2", false);
-            ataque3 = false;
-            StartCoroutine(Ataque3_TiempoAnimacion3());
             
+            ataque3 = false;
+            //StartCoroutine(Ataque3_TiempoAnimacion3());
+            CancelarAtaques();
+
+
         }
 
 
@@ -327,19 +334,23 @@ public class ContT : MonoBehaviour
         ataque1 = true;
     }
 
-    // public void CancelarAtaques()
-    //{
-    //    float tiempoAcumulado = 0;
-    //    float tiempoMaximo = tiempoAcumulado += Time.deltaTime;
-    //    if (tiempoMaximo >= 3)
-    //    {
-    //        ataque1 = true;
-    //        ataque2 = false;
-    //        ataque3 = false;
-    //    }
-    //    yield return new WaitForSeconds(0);
-    //}
-   
+    public void CancelarAtaques()
+    {
+        float tiempoAcumulado = 0;
+        float tiempoMaximo = tiempoAcumulado += Time.deltaTime;
+        if (tiempoMaximo >= 3)
+        {
+            ataque1 = true;
+            ataque2 = false;
+            ataque3 = false;
+        }
+        else if (sigAtaque ==true)
+        {
+            tiempoAcumulado = 0;
+        }
+       
+    }
+
 
 
 
