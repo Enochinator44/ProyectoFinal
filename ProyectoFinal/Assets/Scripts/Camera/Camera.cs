@@ -50,8 +50,8 @@ public class Camera : MonoBehaviour
 
         while (elapsed< duracion)
         {
-            float x = Random.Range(-1f, 1f)*magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
+            float x = Random.Range(0f, 0.02f)*magnitude;
+            float y = Random.Range(0f, 0.02f) * magnitude;
 
             transform.localPosition = new Vector3(x, y, posOriginal.z);
 

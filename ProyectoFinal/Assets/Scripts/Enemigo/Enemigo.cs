@@ -44,8 +44,8 @@ public class Enemigo : MonoBehaviour
     private IEnumerator Proyectil1()
     {
         ProyectilActual = Instantiate(ProyectilF, transform.position, transform.localRotation);
-        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1; 
-
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
+        ProyectilActual.GetComponent<Rigidbody>().AddForce(ProyectilActual.transform.forward * 1000);
         yield return null;
     }
 }
