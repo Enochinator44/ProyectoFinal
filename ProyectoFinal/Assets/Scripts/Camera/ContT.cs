@@ -70,6 +70,7 @@ public class ContT : MonoBehaviour
         ataque1 = true;
         ataque2 = false;
         ataque3 = false;
+        bCombo = false;
         parry.SetActive(false);
         //sigAtaque = false;
 
@@ -144,8 +145,9 @@ public class ContT : MonoBehaviour
         }
 
         //AtaquesBasicos();
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && bCombo == false)
         {
+            bCombo = true;
             StartCoroutine(Combos());
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -280,8 +282,6 @@ public class ContT : MonoBehaviour
     {
 
     }
-
-
     IEnumerator ResetearEscena()
     {
         yield return new WaitForSeconds(5);
@@ -290,9 +290,6 @@ public class ContT : MonoBehaviour
             muerto = false;
         }
     }
-
-   
-
     private IEnumerator DashCoroutine()
     {
 
@@ -338,6 +335,7 @@ public class ContT : MonoBehaviour
         ataque3 = false;
         yield return new WaitForSeconds(0.1f);
         playerAnimatorController.SetBool("Ataque3", false);
+  
         ataque1 = true;
         ataque2 = false;
         
@@ -345,38 +343,59 @@ public class ContT : MonoBehaviour
     }
     public IEnumerator Combos()
     {
-        bCombo = true;
+       
+        playerAnimatorController.SetBool("Ataque3", false);
         playerAnimatorController.SetBool("Ataque1", true);
         Debug.Log("Primer ataque");
+
+
         bWaitForCombo = true;
-        while (bWaitForCombo || TiempoCombo < 1) {
-            if (Input.GetKeyDown(KeyCode.Mouse0)) {
+        while (bWaitForCombo)
+        {
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
                 bWaitForCombo = false;
-            }
-            TiempoCombo += Time.deltaTime;
+            }            
             yield return null;
         }
-        TiempoCombo = 0;
-        playerAnimatorController.SetBool("Ataque2", true);
-        Debug.Log("Segundo ataque");
+
+
         bWaitForCombo = true;
-        while (bWaitForCombo || TiempoCombo < 1)
+        while (bWaitForCombo /*|| TiempoCombo < 1*/) 
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 bWaitForCombo = false;
             }
+           
             TiempoCombo += Time.deltaTime;
             yield return null;
         }
         TiempoCombo = 0;
+        playerAnimatorController.SetBool("Ataque1", false);
+        playerAnimatorController.SetBool("Ataque2", true);
+        Debug.Log("Segundo ataque");
+        bWaitForCombo = true;
+        while (bWaitForCombo /*|| TiempoCombo < 1*/)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                bWaitForCombo = false;
+            }
+            
+            TiempoCombo += Time.deltaTime;
+            yield return null;
+        }
+        TiempoCombo = 0;
+        playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque3", true);
         Debug.Log("Tercer ataque");
+        bCombo = false;
 
     }
     IEnumerator CancelarCombo()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         ataque1 = true;
         ataque2 = false;
         ataque3 = false;
@@ -390,22 +409,7 @@ public class ContT : MonoBehaviour
         parry.SetActive(false);
     }
 
-    //public void CancelarAtaques()
-    //{
-        
-    //    float tiempoAcumulado = 0;
-    //    Debug.Log("TiempoDetenerAtaque = " + tiempoAcumulado);
-    //    float tiempoMaximo = tiempoAcumulado += Time.deltaTime;
-    //    if (tiempoMaximo >= 3)
-    //    {
-    //        ataque1 = true;
-    //        ataque2 = false;
-    //        ataque3 = false;
-    //        sigAtaque = false;
-    //    }
-        
-       
-    //}
+    
 
 
 
