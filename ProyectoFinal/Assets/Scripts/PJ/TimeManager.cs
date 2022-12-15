@@ -4,11 +4,13 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
     public float slowdownFactor = 0.05f;
-    public float slowdownLength = 2f; //cambiar esto para vincularlo con la vida 
+    public float slowdownLength = 2f;
+    public float tiempo;//cambiar esto para vincularlo con la vida 
 
 
-    private void Update()
+    private void FixedUpdate()
     {
+        tiempo = Time.timeScale;
         Time.timeScale += (1f / slowdownLength)*Time.deltaTime;
         if (Time.timeScale>1)
         {

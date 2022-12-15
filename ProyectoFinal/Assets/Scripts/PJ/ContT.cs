@@ -7,6 +7,7 @@ public class ContT : MonoBehaviour
     private float horizontalMove;
     private float verticalMove;
 
+    public Rigidbody playerRB;
     public float playerSpeed;
     private Vector3 movPlayer;
     public float gravity = 9.8f;
@@ -52,7 +53,7 @@ public class ContT : MonoBehaviour
     public bool bCombo;
     public bool bWaitForCombo;
     public float TiempoCombo;
-
+    public bool sigGolpe;
     //Variables Animacion
 
     public Animator playerAnimatorController;
@@ -83,6 +84,10 @@ public class ContT : MonoBehaviour
         horizontalMove = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");
 
+        //playerRB.velocity = new Vector3(horizontalMove, 0, verticalMove) * playerSpeed;
+
+        transform.Translate(playerInput * playerSpeed*Time.unscaledDeltaTime, Space.World);
+        
         playerInput = new Vector3(horizontalMove, 0, verticalMove);
         playerInput = Vector3.ClampMagnitude(playerInput, 1);
 
@@ -106,7 +111,7 @@ public class ContT : MonoBehaviour
         PlayerSkills();
 
         //player.Move(movPlayer * Time.unscaledDeltaTime);
-        player.SimpleMove(playerInput * playerSpeed);
+        //player.SimpleMove(playerInput * playerSpeed);
         
         
 
@@ -229,43 +234,7 @@ public class ContT : MonoBehaviour
         }
     }
    
-    void AtaquesBasicos()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0)&& ataque1==true && ataque2 ==false &&ataque3 ==false)
-        {
-            Debug.Log("ATAQUE1");
-            playerAnimatorController.SetBool("Ataque1", true);
-            
-          
-
-            StartCoroutine(Ataque1_TiempoAnimacion());
-            //CancelarAtaques();
-        }
-        if ( ataque1==false&&ataque2==true&& ataque3 ==false &&Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Debug.Log("ATAQUE2");
-            
-            playerAnimatorController.SetBool("Ataque2", true);
-            
-            
-            StartCoroutine(Ataque2_TiempoAnimacion2());
-            
-            
-        }
-        if ( ataque1==false &&ataque2==false && ataque3==true && Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Debug.Log("ATAQUE3");
-            playerAnimatorController.SetBool("Ataque3", true);
-            
-           
-            StartCoroutine(Ataque3_TiempoAnimacion3());
-            //CancelarAtaques();
-
-
-        }
-
-
-    }
+   
 
     
 
@@ -307,50 +276,18 @@ public class ContT : MonoBehaviour
         dashtime = 0.3f;
         player.enabled = true;
     }
-    IEnumerator Ataque1_TiempoAnimacion()
-    {
-        ataque1 = false;
-        yield return new WaitForSeconds(0.1f);
-        playerAnimatorController.SetBool("Ataque1", false);
-        StartCoroutine(CancelarCombo());
-        
-        ataque2 = true;
-      
-    }
-    IEnumerator Ataque2_TiempoAnimacion2()
-    {
-        StopCoroutine(CancelarCombo());
-        ataque2 = false;
-        yield return new WaitForSeconds(0.1f);
-        playerAnimatorController.SetBool("Ataque2", false);
-        ataque3 = true;
-        StartCoroutine(CancelarCombo());
-        
-        
-       
-    }
-    IEnumerator Ataque3_TiempoAnimacion3()
-    {
-        StopCoroutine(CancelarCombo());
-        ataque3 = false;
-        yield return new WaitForSeconds(0.1f);
-        playerAnimatorController.SetBool("Ataque3", false);
-  
-        ataque1 = true;
-        ataque2 = false;
-        
-        
-    }
+   
     public IEnumerator Combos()
     {
+        Debug.Log("Empieza Corrutina Combos");
        
         playerAnimatorController.SetBool("Ataque3", false);
         playerAnimatorController.SetBool("Ataque1", true);
         Debug.Log("Primer ataque");
 
-
+        
         bWaitForCombo = true;
-        while (bWaitForCombo)
+        while (bWaitForCombo )
         {
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
@@ -363,12 +300,25 @@ public class ContT : MonoBehaviour
         bWaitForCombo = true;
         while (bWaitForCombo /*|| TiempoCombo < 1*/) 
         {
+            
+            TiempoCombo += Time.deltaTime;
+            if (TiempoCombo > 2)
+            {
+                Debug.Log("saleAtaque2");
+                CancelarCombo();
+                yield break;
+                
+            }
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                Debug.Log("atque2");
                 bWaitForCombo = false;
+                bCombo = false;
+                TiempoCombo = 0;
             }
+            
            
-            TiempoCombo += Time.deltaTime;
+           
             yield return null;
         }
         TiempoCombo = 0;
@@ -378,12 +328,21 @@ public class ContT : MonoBehaviour
         bWaitForCombo = true;
         while (bWaitForCombo /*|| TiempoCombo < 1*/)
         {
+            TiempoCombo += Time.deltaTime;
+            if (TiempoCombo > 2)
+            {
+                Debug.Log("saleAtaque3");
+                CancelarCombo();
+                yield break;
+            }
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                Debug.Log("atque3");
                 bWaitForCombo = false;
+                TiempoCombo = 0;
             }
             
-            TiempoCombo += Time.deltaTime;
+           
             yield return null;
         }
         TiempoCombo = 0;
@@ -393,24 +352,23 @@ public class ContT : MonoBehaviour
         bCombo = false;
 
     }
-    IEnumerator CancelarCombo()
-    {
-        yield return new WaitForSeconds(3);
-        ataque1 = true;
-        ataque2 = false;
-        ataque3 = false;
-        playerAnimatorController.SetBool("Ataque1", false);
-        playerAnimatorController.SetBool("Ataque2", false);
-        playerAnimatorController.SetBool("Ataque3", false);
-    }
+   
     IEnumerator TiempoParry()
     {
         yield return new WaitForSeconds(1);
         parry.SetActive(false);
     }
+    void CancelarCombo()
+    {
+        TiempoCombo = 0;
+        bCombo = false;
+        playerAnimatorController.SetBool("Ataque3", false);
+        playerAnimatorController.SetBool("Ataque2", false);
+        playerAnimatorController.SetBool("Ataque1", false);
+    }
 
-    
 
+   
 
 
 

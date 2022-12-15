@@ -7,6 +7,7 @@ public class ProyectilF : MonoBehaviour
     // Start is called before the first frame update
     public float[] speed;
     public Animator anim;
+    
 
     public int tipo;
     void Start()

@@ -2452,6 +2452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowdownFactor: 0.05
   slowdownLength: 2
+  tiempo: 0
 --- !u!1 &1589885590
 GameObject:
   m_ObjectHideFlags: 0
@@ -2681,6 +2682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09fd6595908a6f14da3dad2711b1b17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRB: {fileID: 0}
   playerSpeed: 20
   gravity: 9.8
   fallVelocity: 0
@@ -2702,6 +2704,7 @@ MonoBehaviour:
   bCombo: 0
   bWaitForCombo: 0
   TiempoCombo: 0
+  sigGolpe: 0
   playerAnimatorController: {fileID: 1759787867}
 --- !u!143 &1759787862
 CharacterController:
@@ -2793,7 +2796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759787860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.73306537, y: 5.04, z: -42.7}
+  m_LocalPosition: {x: 0.73306537, y: 1.66, z: -42.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
