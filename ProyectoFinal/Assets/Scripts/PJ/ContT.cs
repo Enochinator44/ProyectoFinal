@@ -21,6 +21,7 @@ public class ContT : MonoBehaviour
     public TimeManager timeManager;
 
     public Camera cameraShake;
+
    
 
     private bool muerto;
@@ -43,7 +44,7 @@ public class ContT : MonoBehaviour
 
     public bool conArma = true;
     private Vector3 posicionInicial;
-    public GameObject parry;
+    public GameObject parry,gamemanager;
 
 
   
@@ -86,7 +87,7 @@ public class ContT : MonoBehaviour
 
         //playerRB.velocity = new Vector3(horizontalMove, 0, verticalMove) * playerSpeed;
 
-        transform.Translate(playerInput * playerSpeed*Time.unscaledDeltaTime, Space.World);
+        //transform.Translate(playerInput * playerSpeed*Time.unscaledDeltaTime, Space.World);
         
         playerInput = new Vector3(horizontalMove, 0, verticalMove);
         playerInput = Vector3.ClampMagnitude(playerInput, 1);
@@ -111,7 +112,7 @@ public class ContT : MonoBehaviour
         PlayerSkills();
 
         //player.Move(movPlayer * Time.unscaledDeltaTime);
-        //player.SimpleMove(playerInput * playerSpeed);
+        player.SimpleMove(playerInput * playerSpeed);
         
         
 
@@ -154,6 +155,8 @@ public class ContT : MonoBehaviour
         {
             bCombo = true;
             StartCoroutine(Combos());
+
+            //AtaqueCargado
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -187,9 +190,13 @@ public class ContT : MonoBehaviour
         {
             velocidadmodificada = 1;
         }
-        if (Input.GetKey(KeyCode.T) && Time.timeScale==1)
+        if (Input.GetKeyDown(KeyCode.T) && gamemanager.GetComponent<GameManager>().vSlowMotion == 1)
         {
-            timeManager.SlowMotion();
+            gamemanager.GetComponent<GameManager>().SlowMotion();
+        }
+        if (Input.GetKeyUp(KeyCode.T)&&gamemanager.GetComponent<GameManager>().vSlowMotion!=1)
+        {
+            gamemanager.GetComponent<GameManager>().SlowMotionOff();
         }
         /*if(Input.GetKeyDown(KeyCode.Space) && trepar == true)
         {

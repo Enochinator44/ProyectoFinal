@@ -10,6 +10,7 @@ public class Enemigo : MonoBehaviour
     public float speedEnem, timing;
     public GameObject[] movEnem;
     public NavMeshAgent agente;
+    public float vProvisional;
     Coroutine cProyectil1;
 
     
@@ -17,7 +18,7 @@ public class Enemigo : MonoBehaviour
     
     void Start()
     {
-        
+        vProvisional = 1000;
     }
 
     // Update is called once per frame
@@ -45,7 +46,7 @@ public class Enemigo : MonoBehaviour
     {
         ProyectilActual = Instantiate(ProyectilF, transform.position, transform.localRotation);
         ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
-        ProyectilActual.GetComponent<Rigidbody>().AddForce(ProyectilActual.transform.forward * 1000);
+        ProyectilActual.GetComponent<Rigidbody>().AddForce(ProyectilActual.transform.forward * vProvisional);
         yield return null;
     }
 }
