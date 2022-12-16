@@ -81,6 +81,7 @@ public class ContT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
 
         horizontalMove = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");
@@ -276,7 +277,7 @@ public class ContT : MonoBehaviour
             Vector3  v = new Vector3(horizontalMove, 0, verticalMove);
             transform.Translate( v.normalized* (dashSpeed * 2) * Time.unscaledDeltaTime, Space.World);
             dashtime -= Time.unscaledDeltaTime;
-            
+            Debug.Log("dashtime");
             yield return null;
         }
 

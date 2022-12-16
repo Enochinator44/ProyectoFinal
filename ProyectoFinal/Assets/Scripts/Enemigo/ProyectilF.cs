@@ -7,23 +7,61 @@ public class ProyectilF : MonoBehaviour
     // Start is called before the first frame update
     public float[] speed;
     public Animator anim;
+    bool inicio = false;
+    public GameObject gm;
+    
+    Rigidbody rb;
     
 
     public int tipo;
     void Start()
     {
 
+        rb = GetComponent<Rigidbody>();
+        gm = GameObject.Find("gamemanager");
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (tipo)
-        {
-            //case 1:
-            //    transform.Translate(Vector3.forward * speed[0] * Time.deltaTime, Space.Self);
-            //    break;
+
+        if (inicio == false) {
+            inicio = true;
+            switch (tipo)
+            {
+                case 1:
+
+                    rb.AddForce(transform.forward * speed[0]);
+
+                    break;
+            }
+
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+
+
+            rb.AddForce(-transform.forward* speed[tipo-1]/2);
+
+        }
+        if (Input.GetKeyUp(KeyCode.T))
+        {
+
+
+            rb.AddForce(transform.forward * speed[tipo-1]/2);
+
+        }
+
+        Debug.Log(gm.GetComponent<GameManager>().vSlowMotion);
+
+        
+        
+
+
+
+
+
+
 
     }
 
@@ -43,7 +81,7 @@ public class ProyectilF : MonoBehaviour
     }
     public void ParryOk()
     {
-        //GetComponent<Rigidbody>().AddForce(-transform.forward);
+        rb.AddForce(-transform.forward*speed[0]);
     }
     public void ParrayNoOk()
     {
