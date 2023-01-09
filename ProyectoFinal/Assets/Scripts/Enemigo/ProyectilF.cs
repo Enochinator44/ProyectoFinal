@@ -9,7 +9,7 @@ public class ProyectilF : MonoBehaviour
     public Animator anim;
     bool inicio = false;
     public GameObject gm;
-    
+    float count;
     Rigidbody rb;
     
 
@@ -54,11 +54,15 @@ public class ProyectilF : MonoBehaviour
 
         Debug.Log(gm.GetComponent<GameManager>().vSlowMotion);
 
-        
-        
 
 
 
+
+        count += Time.deltaTime;
+        if (count > 10)
+        {
+            Destroy(gameObject);
+        }
 
 
 
@@ -71,11 +75,13 @@ public class ProyectilF : MonoBehaviour
         Debug.Log("colision");
         if (collision.gameObject.tag == "Wall")
         {
-            DestroyImmediate(gameObject);
+            Debug.Log("colision2");
+            Destroy(gameObject);
         }
         else if (collision.gameObject.tag == "Player")
         {
-            DestroyImmediate(gameObject);
+            Debug.Log("colision2");
+            Destroy(gameObject);
 
         }
     }

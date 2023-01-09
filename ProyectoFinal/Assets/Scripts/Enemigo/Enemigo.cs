@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemigo : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject ProyectilF, ProyectilActual, Player;
+    public GameObject ProyectilF, ProyectilActual, Player, spawn;
     public float speedEnem, timing;
     public GameObject[] movEnem;
     public NavMeshAgent agente;
@@ -44,7 +44,7 @@ public class Enemigo : MonoBehaviour
     }
     private IEnumerator Proyectil1()
     {
-        ProyectilActual = Instantiate(ProyectilF, transform.position, transform.localRotation);
+        ProyectilActual = Instantiate(ProyectilF, spawn.GetComponent<Transform>().position, transform.localRotation);
         ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
         
         yield return null;
