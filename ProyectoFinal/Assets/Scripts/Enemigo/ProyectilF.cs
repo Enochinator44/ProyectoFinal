@@ -30,9 +30,20 @@ public class ProyectilF : MonoBehaviour
             switch (tipo)
             {
                 case 1:
-
-                    rb.AddForce(transform.forward * speed[0]);
-
+                    rb.AddForce(transform.forward * speed[tipo-1]);
+                    break;
+                case 2:
+                    rb.AddForce(transform.forward * speed[tipo - 1]);
+                    transform.localScale += new Vector3(3,3,3);
+                    break;
+                case 3:
+                    rb.AddForce(transform.forward * speed[tipo - 1]);
+                    break;
+                case 4:
+                    rb.AddForce(transform.forward * speed[tipo - 1]);
+                    break;
+                case 5:
+                    rb.AddForce(transform.forward * speed[tipo - 1]);
                     break;
             }
 
@@ -69,7 +80,8 @@ public class ProyectilF : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    
+    private void OnTriggerEnter(Collider collision)
     {
 
         Debug.Log("colision");
@@ -87,7 +99,7 @@ public class ProyectilF : MonoBehaviour
     }
     public void ParryOk()
     {
-        rb.AddForce(-transform.forward*speed[0]);
+        rb.AddForce(-transform.forward*speed[tipo - 1]);
     }
     public void ParrayNoOk()
     {
