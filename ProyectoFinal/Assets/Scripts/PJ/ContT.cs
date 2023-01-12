@@ -163,6 +163,7 @@ public class ContT : MonoBehaviour
         {
             parry.SetActive(true);
             StartCoroutine(TiempoParry());
+
         }
 
        
@@ -363,7 +364,7 @@ public class ContT : MonoBehaviour
    
     IEnumerator TiempoParry()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         parry.SetActive(false);
     }
     void CancelarCombo()

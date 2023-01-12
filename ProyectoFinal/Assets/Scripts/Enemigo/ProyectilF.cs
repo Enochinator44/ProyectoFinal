@@ -7,8 +7,9 @@ public class ProyectilF : MonoBehaviour
     // Start is called before the first frame update
     public float[] speed;
     public Animator anim;
-    bool inicio = false;
-    public GameObject gm;
+    bool inicio, parried = false;
+    Vector3 pos, axis;
+    public GameObject gm, enemy, player;
     float count;
     Rigidbody rb;
     
@@ -19,35 +20,56 @@ public class ProyectilF : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         gm = GameObject.Find("gamemanager");
+        enemy = GameObject.Find("Enemy");
+        player = GameObject.Find("Player");
+        axis = transform.right;
+        pos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (inicio == false) {
-            inicio = true;
+        
+            
             switch (tipo)
             {
                 case 1:
-                    rb.AddForce(transform.forward * speed[tipo-1]);
+                    if (inicio == false)
+                    {
+                        inicio = true;
+                        rb.AddForce(transform.forward * speed[tipo - 1]);
+                    }
                     break;
                 case 2:
-                    rb.AddForce(transform.forward * speed[tipo - 1]);
-                    transform.localScale += new Vector3(3,3,3);
+
+                    if (inicio == false)
+                    {
+                        inicio = true;
+                        rb.AddForce(transform.forward * speed[tipo - 1]);
+                        transform.localScale += new Vector3(3, 3, 3);
+                    }
                     break;
                 case 3:
-                    rb.AddForce(transform.forward * speed[tipo - 1]);
+                    transform.RotateAround(enemy.transform.position, Vector3.up, speed[tipo-1]*Time.deltaTime*35);
+                    transform.Translate(new Vector3(speed[tipo - 1] * Time.deltaTime, 0, speed[tipo - 1] * Time.deltaTime), Space.Self);
                     break;
                 case 4:
-                    rb.AddForce(transform.forward * speed[tipo - 1]);
-                    break;
+                
+                pos += -Vector3.forward * Time.deltaTime * speed[tipo-1];
+                transform.position = pos + axis * Mathf.Sin(Time.time * 5f) * 10f;
+                
+                break;
                 case 5:
-                    rb.AddForce(transform.forward * speed[tipo - 1]);
-                    break;
+                    if (inicio == false)
+                    {
+                        inicio = true;
+                        rb.AddForce(transform.forward * speed[tipo - 1]);
+                    }
+                break;
             }
 
-        }
+       
         if (Input.GetKeyDown(KeyCode.T))
         {
 
@@ -63,7 +85,8 @@ public class ProyectilF : MonoBehaviour
 
         }
 
-        Debug.Log(gm.GetComponent<GameManager>().vSlowMotion);
+        
+        
 
 
 
@@ -95,11 +118,21 @@ public class ProyectilF : MonoBehaviour
             Debug.Log("colision2");
             Destroy(gameObject);
 
+        }else if (collision.gameObject.tag == "Enemy" && parried == true)
+        {
+            Debug.Log("enemy");
+            Destroy(gameObject);
         }
     }
     public void ParryOk()
     {
+        
         rb.AddForce(-transform.forward*speed[tipo - 1]);
+        
+    }
+    public void parryDone()
+    {
+        parried = true;
     }
     public void ParrayNoOk()
     {

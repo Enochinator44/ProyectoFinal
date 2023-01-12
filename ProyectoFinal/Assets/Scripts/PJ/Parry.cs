@@ -19,7 +19,7 @@ public class Parry : MonoBehaviour
     {
         if (other.tag=="ParryOk")
         {
-            
+            other.GetComponent<ProyectilF>().parryDone();
             other.GetComponent<Animator>().SetBool("Parry", true);
             //if (Input.GetKeyDown(KeyCode.Mouse1))
             //{

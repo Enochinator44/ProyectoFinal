@@ -34,6 +34,7 @@ public class Enemigo : MonoBehaviour
         if (timing > 5)
         {
             ciclo = Random.Range(1,5);
+            
             switch (ciclo)
             {
                 case 1: 

@@ -115,11 +115,13 @@ MonoBehaviour:
   speed:
   - 1000
   - 500
-  - 1000
-  - 1000
+  - 5
+  - 10
   - 1000
   anim: {fileID: 8697363484611887107}
   gm: {fileID: 0}
+  enemy: {fileID: 0}
+  player: {fileID: 0}
   tipo: 0
 --- !u!95 &8697363484611887107
 Animator:
