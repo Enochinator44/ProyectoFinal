@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 0871036477f53a842b512ecc2f7ac5c0
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Distorter Demo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 5ed4ada03b42f33458fc658787483052, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
