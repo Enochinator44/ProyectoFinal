@@ -8,17 +8,19 @@ public class Camera : MonoBehaviour
 
     public GameObject target, jugador,enemigo,Aim;
     public float distJugadorAenemigo;
-    
+    public float camaraGiroX;
+    public float distCamEnemigo;
+
+
     void Start()
     {
-        
+        camaraGiroX = transform.rotation.x;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        //Transform aux = target.transform;
 
         //aux.position = new Vector3(aux.position.x, aux.position.y, aux.position.z);
 
@@ -26,6 +28,7 @@ public class Camera : MonoBehaviour
 
 
         //transform.LookAt(target.transform, target.transform.up);
+       
 
         transform.LookAt(target.transform);
 
@@ -34,11 +37,13 @@ public class Camera : MonoBehaviour
         float ajuste = Mathf.Clamp(distJugadorAenemigo, 5, 40);
         float ajusteZ = Mathf.Clamp(distJugadorAenemigo, 3, 60);
         Vector3 v = new Vector3(Aim.transform.position.x, 0, 0);
+        float ajusteX = Mathf.Clamp(distJugadorAenemigo, 0, 0);
        
-        transform.position = new Vector3(v.magnitude , ajuste,(-1.5f*ajusteZ));
+        transform.position = new Vector3(ajusteX , ajuste,(-1.5f*ajusteZ));
 
         //transform.position = new Vector3(transform.position.x, 1 + (1f * distJugadorAenemigo), 1 + (-2f * distJugadorAenemigo));
 
+        
 
     }
 

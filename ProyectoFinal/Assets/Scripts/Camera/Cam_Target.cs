@@ -16,6 +16,6 @@ public class Cam_Target : MonoBehaviour
     void Update()
     {
 
-        transform.position = (jugador.transform.position + enemigo.transform.position)/2;
+        transform.position = (jugador.transform.position + enemigo.transform.position)/1.2f;
     }
 }
