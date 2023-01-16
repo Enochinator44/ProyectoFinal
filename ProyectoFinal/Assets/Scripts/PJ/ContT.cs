@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ContT : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class ContT : MonoBehaviour
 
     public bool conArma = true;
     private Vector3 posicionInicial;
-    public GameObject parry,gamemanager;
+    public GameObject parry,gamemanager,escudo,enemigo;
 
 
   
@@ -55,6 +56,13 @@ public class ContT : MonoBehaviour
     public bool bWaitForCombo;
     public float TiempoCombo;
     public bool sigGolpe;
+    public bool bEscudo;
+    public bool bAtaqueCargado;
+    public float cdEscudo;
+    public float cdAtaqueCargado;
+    public float tAtaqueCargado;
+    public Image cooldownA;
+    public Image cooldownE;
     //Variables Animacion
 
     public Animator playerAnimatorController;
@@ -114,12 +122,34 @@ public class ContT : MonoBehaviour
 
         //player.Move(movPlayer * Time.unscaledDeltaTime);
         player.SimpleMove(playerInput * playerSpeed);
-        
-        
 
-       
+        cdAtaqueCargado += Time.deltaTime;
+        cdEscudo += Time.deltaTime;
+        if (cdAtaqueCargado >= 5)
+        {
+            bAtaqueCargado = true;
 
-        
+        }
+        else
+        {
+            Debug.Log(1.0f / cdAtaqueCargado * Time.unscaledDeltaTime);
+            //Debug.Log(cooldownA.fillAmount + "a");
+
+            cooldownA.fillAmount += 1.0f / 5 * Time.unscaledDeltaTime;
+        }
+        if (cdEscudo >= 10)
+        {
+            bEscudo = true;
+
+        }
+        else
+        {
+            cooldownE.fillAmount += 1.0f / 10 * Time.unscaledDeltaTime;
+        }
+
+
+
+
 
 
 
@@ -143,7 +173,8 @@ public class ContT : MonoBehaviour
 
     public void PlayerSkills()
     {
-       
+        AtaqueCargado();
+
         if ( Input.GetKeyDown(KeyCode.Alpha1))
         {
            Debug.Log("shake");
@@ -165,8 +196,16 @@ public class ContT : MonoBehaviour
             StartCoroutine(TiempoParry());
 
         }
+        if (Input.GetKeyDown(KeyCode.LeftControl) && bEscudo == true)
+        {
+            bEscudo = false;
+            cdEscudo = 0;
+            cooldownE.fillAmount = 0;
+            escudo.SetActive(true);
+            StartCoroutine(Invulnerabilidad());
 
-       
+        }
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Run = true;
@@ -375,9 +414,50 @@ public class ContT : MonoBehaviour
         playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque1", false);
     }
+    void AtaqueCargado()
+    {
+
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            bAtaqueCargado = false;
+            cdAtaqueCargado = 0;
+            cooldownA.fillAmount = 0;
+
+            player.enabled = false;
+            transform.LookAt(enemigo.transform.position);
+            tAtaqueCargado += Time.deltaTime;
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * (30000 * tAtaqueCargado), Color.yellow, 0);
+            Debug.DrawRay(transform.position, transform.forward * 2 * tAtaqueCargado, Color.yellow, 0);
+            Debug.Log("Cargando Ataque");
+
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse1) || tAtaqueCargado >= 3f)
+        {
+            RaycastHit hit;
+            Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 100 * tAtaqueCargado);
+
+            Debug.Log("AtaqueCargado");
 
 
-   
+
+
+            tAtaqueCargado = 0;
+            player.enabled = true;
+
+        }
+       
+    }
+    IEnumerator Invulnerabilidad()
+    {
+        //Cancelar El daño cuando el sistema de vida Este programado
+        escudo.SetActive(true);
+        yield return new WaitForSeconds(1.3f);
+        Debug.Log("Escudook");
+        escudo.SetActive(false);
+    }
+
+
+
 
 
 
