@@ -42,7 +42,7 @@ Material:
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 3003
   stringTagMap:
     MotionVector: User
     RenderType: Transparent
@@ -378,7 +378,7 @@ Material:
     - _ATDistance: 1
     - _AddPrecomputedVelocity: 0
     - _AlbedoAffectEmissive: 0
-    - _AlphaCutoff: 0.5
+    - _AlphaCutoff: 0.545
     - _AlphaCutoffEnable: 1
     - _AlphaCutoffPostpass: 0.5
     - _AlphaCutoffPrepass: 0.5
@@ -400,7 +400,7 @@ Material:
     - _Cull: 0
     - _CullMode: 0
     - _CullModeForward: 0
-    - _Cutoff: 0.5
+    - _Cutoff: 0.545
     - _DepthFade: 1
     - _DepthOffsetEnable: 0
     - _DetailAlbedoScale: 1
@@ -439,7 +439,7 @@ Material:
     - _DistortionBlurDstBlend: 0
     - _DistortionBlurRemapMax: 1
     - _DistortionBlurRemapMin: 0
-    - _DistortionBlurScale: 1
+    - _DistortionBlurScale: 12
     - _DistortionBlurSrcBlend: 7
     - _DistortionDepthTest: 1
     - _DistortionDstBlend: 0
@@ -447,7 +447,7 @@ Material:
     - _DistortionEnabled: 0
     - _DistortionMaskIntensity: 1
     - _DistortionOnly: 0
-    - _DistortionScale: 1
+    - _DistortionScale: 12
     - _DistortionSrcBlend: 2
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
@@ -644,7 +644,7 @@ Material:
     - _TransparentCullMode: 2
     - _TransparentDepthPostpassEnable: 0
     - _TransparentDepthPrepassEnable: 0
-    - _TransparentSortPriority: 0
+    - _TransparentSortPriority: 3
     - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 0
     - _UVBase: 0
@@ -680,7 +680,7 @@ Material:
     - _BaseColorMap0_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.46989965, g: 0, b: 1, a: 1}
+    - _Color: {r: 0.37266493, g: 0.12588996, b: 0.6509434, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _ColorBottom: {r: 1, g: 0.36666667, b: 0, a: 0}
     - _ColorTop: {r: 1, g: 0.6666667, b: 0, a: 0}
@@ -723,6 +723,6 @@ Material:
     - _UVMappingMask3: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskBlendMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
-    - _UnlitColor: {r: 0.46989965, g: 0, b: 1, a: 1}
+    - _UnlitColor: {r: 0.372665, g: 0.12588999, b: 0.6509434, a: 1}
     - _UnlitColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
