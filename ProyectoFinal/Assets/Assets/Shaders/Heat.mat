@@ -122,7 +122,7 @@ Material:
     - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 0
     - _Twirl_Strength: 40
-    - _Twirl_Strength1: 35
+    - _Twirl_Strength1: 25.24
     - _UseShadowThreshold: 0
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
