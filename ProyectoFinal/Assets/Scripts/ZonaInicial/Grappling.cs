@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Grappling : MonoBehaviour
 {
@@ -29,13 +30,22 @@ public class Grappling : MonoBehaviour
     public KeyCode grappleKey = KeyCode.Mouse0;
     public bool grappling;
 
+    [Header("UI")]
+    public Image mira;
+    public Image miraInterior;
+    public GameObject prueba;
+
     private void Start()
     {
         pm = GetComponent<Controllador2>();
+        prueba.SetActive(false);
+        
     }
 
     private void Update()
     {
+        CheckGrapple();
+
         if (Input.GetKeyDown(grappleKey))
         {
             StartGrapple(); 
@@ -44,6 +54,7 @@ public class Grappling : MonoBehaviour
         {
             grapplingCdTimmer -= Time.deltaTime;
         }
+
     }
 
     private void LateUpdate()
@@ -71,6 +82,10 @@ public class Grappling : MonoBehaviour
         {
             grapplePoint = hit.point;
 
+           
+            
+            
+
             Invoke(nameof(ExecuteGrapple), grappleDelayedTime);
         }
         else
@@ -87,6 +102,8 @@ public class Grappling : MonoBehaviour
     private void ExecuteGrapple()
     {
         pm.freeze = false;
+        prueba.SetActive(false);
+
 
         Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
 
@@ -105,10 +122,21 @@ public class Grappling : MonoBehaviour
 
     public void StopGrapple()
     {
+        prueba.SetActive(false);
         pm.freeze = false;
         grappling = false;
         grapplingCdTimmer = grapplingCd;
         lr.enabled = false;
+    }
+
+    private void CheckGrapple()
+    {
+        
+        Physics.Raycast(cam.transform.position, cam.transform.forward, 25f, whatIsGrappleable);
+
+        
+        //prueba.SetActive(true);
+      
     }
 
 

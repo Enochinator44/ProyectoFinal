@@ -1,138 +1,341 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Controllador2 : MonoBehaviour
 {
-    [Header("Movimiento")]
-    public float movSpeed;
-    public Transform orientacion;
+     [Header("Movement")]
+    private float moveSpeed;
+    public float walkSpeed;
+    public float sprintSpeed;
+    public float swingSpeed;
 
     public float groundDrag;
+    public float slideSpeed;
+    public float wallrunSpeed;
 
+    private float desiredMoveSpeed;
+    private float lastDesiredMoveSpeed;
+
+    public float speedIncreaseMultiplier;
+    public float slopeIncreaseMultiplier;
+
+
+    [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
-    public float airmultiplier;
-    bool readyTojump;
+    public float airMultiplier;
+    bool readyToJump;
+
+    [Header("Crouching")]
+    public float crouchSpeed;
+    public float crouchYScale;
+    private float startYScale;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode crouchKey = KeyCode.LeftControl;
+
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    public bool grounded,freeze,activeGrapple;
+    bool grounded;
+
+    [Header("Slope Handling")]
+    public float maxSlopeAngle;
+    private RaycastHit slopeHit;
+    private bool exitingSlope;
+
+    [Header("Camera Effects")]
+    
+    public float grappleFov = 95f;
+
+    public Transform orientation;
 
     float horizontalInput;
     float verticalInput;
 
-    Vector3 movDireccion;
+    Vector3 moveDirection;
+
     Rigidbody rb;
 
+    public MovementState state;
+    public enum MovementState
+    {
+        freeze,
+        grappling,
+        swinging,
+        walking,
+        sprinting,
+        wallrunning,
+        crouching,
+        sliding,
+        air
+    }
+
+    public bool freeze;
+    public bool sliding;
+    public bool activeGrapple;
+    public bool swinging;
+    public bool wallrunning;
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        readyTojump= true;
+
+        readyToJump = true;
+
+        startYScale = transform.localScale.y;
     }
 
     private void Update()
     {
-        //Ground check
-
+        // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        if (freeze)
-        {
-            movSpeed = 0;
-            rb.velocity = Vector3.zero;
-        }
-       
-
-        Inputs();
+        MyInput();
         SpeedControl();
+        StateHandler();
 
-        //Drag
-        if (grounded&& !activeGrapple)
-        {
+        // handle drag
+        if (grounded && !activeGrapple)
             rb.drag = groundDrag;
-        }
         else
-        {
             rb.drag = 0;
-        }
+
+        
     }
+
     private void FixedUpdate()
     {
         MovePlayer();
     }
 
-    private void Inputs()
+    private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        if (Input.GetKey(jumpKey)&& readyTojump&& grounded)
+
+        // when to jump
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
-            Debug.Log("hola");
-            readyTojump = false;
+            readyToJump = false;
+
             Jump();
-            Invoke(nameof(ResetJump),jumpCooldown);
+
+            Invoke(nameof(ResetJump), jumpCooldown);
         }
+
+        // start crouch
+        if (Input.GetKeyDown(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        }
+
+        // stop crouch
+        if (Input.GetKeyUp(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        }
+    }
+
+    private void StateHandler()
+    {
+        // Mode - Freeze
+        if (freeze)
+        {
+            state = MovementState.freeze;
+            moveSpeed = 0;
+            rb.velocity = Vector3.zero;
+        }
+
+        // Mode - Grappling
+        else if (activeGrapple)
+        {
+            state = MovementState.grappling;
+            moveSpeed = sprintSpeed;
+        }
+
+        // Mode - Swinging
+        else if (swinging)
+        {
+            state = MovementState.swinging;
+            moveSpeed = swingSpeed;
+        }
+
+        //Mode -WallRunning
+        if (wallrunning)
+        {
+            state = MovementState.wallrunning;
+            desiredMoveSpeed = wallrunSpeed;
+            
+        }
+
+        // Mode - Sliding
+
+        if (sliding)
+        {
+            state = MovementState.sliding;
+
+            if (OnSlope()&& rb.velocity.y<0.1f)
+            {
+                desiredMoveSpeed = slideSpeed;
+            }
+            else
+            {
+                desiredMoveSpeed = sprintSpeed;
+            }
+        }
+
+        // Mode - Crouching
+        else if (Input.GetKey(crouchKey))
+        {
+            state = MovementState.crouching;
+            desiredMoveSpeed = crouchSpeed;
+        }
+
+        // Mode - Sprinting
+        else if (grounded && Input.GetKey(sprintKey))
+        {
+            state = MovementState.sprinting;
+            desiredMoveSpeed = sprintSpeed;
+        }
+
+        // Mode - Walking
+        else if (grounded)
+        {
+            state = MovementState.walking;
+            desiredMoveSpeed = walkSpeed;
+        }
+
+        // Mode - Air
+        else
+        {
+            state = MovementState.air;
+        }
+
+        if (Mathf.Abs(desiredMoveSpeed-lastDesiredMoveSpeed)>4f && moveSpeed!=0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(SmoothlyLerpMoveSpeed());
+        }
+        else
+        {
+            moveSpeed = desiredMoveSpeed;
+        }
+
+        lastDesiredMoveSpeed = desiredMoveSpeed;
+
+       
+    }
+    private IEnumerator SmoothlyLerpMoveSpeed()
+    {
+        float time = 0;
+        float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
+        float startValue = moveSpeed;
+
+        while (time < difference)
+        {
+            moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
+            if (OnSlope())
+            {
+                float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                float slopeAngleIncrease = 1 + (slopeAngle / 90f);
+
+                time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
+            }
+            else
+            
+                time += Time.deltaTime * speedIncreaseMultiplier;
+            
+            
+            yield return null;
+        }
+
+        moveSpeed = desiredMoveSpeed;
     }
 
     private void MovePlayer()
     {
-        if (activeGrapple)
-        {
-            return;
-        }
-        movDireccion = orientacion.forward * verticalInput + orientacion.right * horizontalInput;
+        if (activeGrapple) return;
+        if (swinging) return;
 
-        if (grounded)
+        // calculate movement direction
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        // on slope
+        if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(movDireccion.normalized * movSpeed * 10f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
+
+            if (rb.velocity.y > 0)
+                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
+
+        // on ground
+        else if (grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+
+        // in air
         else if (!grounded)
-        {
-            rb.AddForce(movDireccion.normalized * movSpeed * 10 * airmultiplier, ForceMode.Force);
-        }
-        
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
+        // turn gravity off while on slope
+        rb.useGravity = !OnSlope();
     }
 
     private void SpeedControl()
     {
-        if (activeGrapple)
-        {
-            return;
-        }
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        if (activeGrapple) return;
 
-        if (flatVel.magnitude>movSpeed)
+        // limiting speed on slope
+        if (OnSlope() && !exitingSlope)
         {
-            Vector3 limitedVel = flatVel.normalized * movSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            if (rb.velocity.magnitude > moveSpeed)
+                rb.velocity = rb.velocity.normalized * moveSpeed;
+        }
+
+        // limiting speed on ground or in air
+        else
+        {
+            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+            // limit velocity if needed
+            if (flatVel.magnitude > moveSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            }
         }
     }
+
     private void Jump()
     {
-        //resetear velocity importante
+        exitingSlope = true;
+
+        // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
     private void ResetJump()
     {
-        readyTojump = true;
+        readyToJump = true;
+
+        exitingSlope = false;
     }
 
     private bool enableMovementOnNextTouch;
-
-    public void JumpToPosition(Vector3 targetPosition,float trajectoryHeight)
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
     {
         activeGrapple = true;
-        velocityToSet= CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
-        Invoke(nameof(SetVelocity),0.1f);
+
+        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
+        Invoke(nameof(SetVelocity), 0.1f);
 
         Invoke(nameof(ResetRestrictions), 3f);
     }
@@ -140,13 +343,16 @@ public class Controllador2 : MonoBehaviour
     private Vector3 velocityToSet;
     private void SetVelocity()
     {
-        rb.velocity = velocityToSet;
         enableMovementOnNextTouch = true;
+        rb.velocity = velocityToSet;
+
+       
     }
 
-    public  void ResetRestrictions()
+    public void ResetRestrictions()
     {
         activeGrapple = false;
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -160,18 +366,35 @@ public class Controllador2 : MonoBehaviour
         }
     }
 
-    public Vector3 CalculateJumpVelocity(Vector3 startPoint,Vector3 endpoint,float trajectoryHeight)
+    public bool OnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+
+        return false;
+    }
+
+    public Vector3 GetSlopeMoveDirection( Vector3 direction)
+    {
+        return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+    }
+
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
     {
         float gravity = Physics.gravity.y;
-        float displacementY = endpoint.y - startPoint.y;
-        Vector3 displacementXZ = new Vector3(endpoint.x - startPoint.x, 0f, endpoint.z - startPoint.z);
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
 
         Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
-        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
-        +Mathf.Sqrt(2*(displacementY-trajectoryHeight)/gravity));
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity) 
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
 
         return velocityXZ + velocityY;
     }
+    
 
    
        
