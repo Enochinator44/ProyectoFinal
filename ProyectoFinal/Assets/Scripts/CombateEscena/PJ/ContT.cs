@@ -22,6 +22,7 @@ public class ContT : MonoBehaviour
     public TimeManager timeManager;
 
     public Camera cameraShake;
+  
 
    
 
@@ -455,6 +456,8 @@ public class ContT : MonoBehaviour
         Debug.Log("Escudook");
         escudo.SetActive(false);
     }
+
+  
 
 
 
