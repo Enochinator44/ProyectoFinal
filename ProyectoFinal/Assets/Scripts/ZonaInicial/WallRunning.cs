@@ -13,7 +13,7 @@ public class WallRunning : MonoBehaviour
     public float wallJumpSideForce;
     public float wallClimbSpeed;
     public float maxWallRunTime;
-    private float wallRunTimer;
+    public float wallRunTimer;
 
     [Header("Inputs")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -54,6 +54,24 @@ public class WallRunning : MonoBehaviour
     {
         CheckForWall();
         StateMachine();
+
+        if (pm.grounded)
+        {
+            exitingWall = false;
+        }
+
+        if (!AboveGround())
+        {
+            Debug.Log("tocandoSuelo");
+        }
+        if (!exitingWall)
+        {
+            Debug.Log("Puede entrar al primer if ");
+        }
+        if (exitingWall)
+        {
+            Debug.Log("No Puede entrar al primer if ");
+        }
     }
 
     private void CheckForWall()
@@ -80,9 +98,11 @@ public class WallRunning : MonoBehaviour
         }
     }
 
-    private bool AboveGround()
+    public bool AboveGround()
     {
+        
         return !Physics.Raycast(transform.position, Vector3.down, miniJumpHeight, whatIsGround);
+        
     }
 
     private void StateMachine()
@@ -97,20 +117,24 @@ public class WallRunning : MonoBehaviour
 
         //Estado1- WallRunning
 
-        if ((wallLeft||wallRight)&&verticalInput>0&&AboveGround() && !exitingWall)
+        if ((wallLeft||wallRight)&&verticalInput>0&&AboveGround()  && !exitingWall)
         {
+           
             //Empieza la movida
+            Debug.Log("primer If");
 
             if (!pm.wallrunning)
             {
-                Debug.Log("empieza el wallrun");
+                
                 StartWallRun();
-                if (wallRunTimer>0)
+                if (wallRunTimer>=0)
                 {
+                    
                     wallRunTimer -= Time.deltaTime;
                 }
                 if (wallRunTimer<=0&&pm.wallrunning)
                 {
+                    Debug.Log("WallrunTImer<=0 y pm.wallruningTrue");
                     exitingWall = true;
                     exitWallTimer = exitWallTime;
                 }
@@ -124,16 +148,19 @@ public class WallRunning : MonoBehaviour
             //Estado2 - Exiting
             else if (exitingWall)
             {
+                Debug.Log("wall");
                 if (pm.wallrunning)
                 {
                     StopWallRun();
                 }
                 if (exitWallTimer>0)
                 {
-                    exitWallTimer -= Time.deltaTime;
+                    Debug.Log("walltimer bajando");
+                    exitWallTimer -=Time.deltaTime;
                 }
                 if (exitWallTimer<=0)
                 {
+                    
                     exitingWall = false;
                 }
             }
@@ -190,10 +217,12 @@ public class WallRunning : MonoBehaviour
     private void StopWallRun()
     {
         pm.wallrunning = false;
+        
     }
 
     private void WallJump()
     {
+        Debug.Log("WallJump");
         exitingWall = true;
         exitWallTimer = exitWallTime;
         Vector3 wallnormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
