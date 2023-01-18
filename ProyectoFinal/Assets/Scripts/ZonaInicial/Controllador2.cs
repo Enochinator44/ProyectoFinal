@@ -215,7 +215,10 @@ public class Controllador2 : MonoBehaviour
         // Mode - Air
         else
         {
+
+            
             state = MovementState.air;
+            
         }
 
         if (Mathf.Abs(desiredMoveSpeed-lastDesiredMoveSpeed)>4f && moveSpeed!=0)
@@ -395,7 +398,7 @@ public class Controllador2 : MonoBehaviour
         return velocityXZ + velocityY;
     }
     
-
+    
    
        
 }
