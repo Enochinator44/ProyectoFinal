@@ -97,7 +97,7 @@ public class WallRunning : MonoBehaviour
 
         //Estado1- WallRunning
 
-        if ((wallLeft||wallRight)&&verticalInput>0&&AboveGround() && !exitingWall)
+        if ((wallLeft||wallRight)&&verticalInput>0 && AboveGround() && !exitingWall)
         {
             //Empieza la movida
 
