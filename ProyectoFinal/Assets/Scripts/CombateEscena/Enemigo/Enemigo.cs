@@ -7,10 +7,11 @@ public class Enemigo : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject ProyectilF, ProyectilActual, Player;
-    public float speedEnem, timing, ciclo;
+    public float speedEnem, timing,  timing2;
     public GameObject[] movEnem;
     public NavMeshAgent agente;
-    public float vProvisional;
+    public int ciclo2, ciclo, exclusivo;
+    public float vProvisional, estado;
     Coroutine cProyectil1;
 
     
@@ -25,35 +26,56 @@ public class Enemigo : MonoBehaviour
     void Update()
     {
         transform.LookAt(Player.transform);
-        for (int i = 0; i < movEnem.Length; i++)
-        {
-            agente.SetDestination(movEnem[i].transform.position);
-           
-        }
 
-        if (timing > 5)
+        timing2 += Time.deltaTime;
+
+        if (timing2 >=45)
         {
-            ciclo = Random.Range(1,5);
-            
-            switch (ciclo)
+            exclusivo = Random.Range(0, 5);
+            while (exclusivo == ciclo2)
             {
-                case 1: 
-                    StartCoroutine("Proyectil1");
-                    break;
-                case 2:
-                    StartCoroutine("Proyectil2");
-                    break;
-                case 3:
-                    StartCoroutine("Proyectil3");
-                    break;
-                case 4:
-                    StartCoroutine("Proyectil4");
-                    break;
-                case 5:
-                    StartCoroutine("Proyectil5");
-                    break;
+                exclusivo = Random.Range(0, 5);
+            }
+            
+            if (ciclo2 != exclusivo)
+            {
+                ciclo2 = exclusivo;
+                estado = ciclo2;
+                agente.SetDestination(movEnem[ciclo2].transform.position);
 
             }
+            timing2 = 0;
+        }
+       
+
+        
+        if (timing > 5)
+        {
+            exclusivo = Random.Range(1,5);
+            if (ciclo != exclusivo)
+            {
+                ciclo = exclusivo;
+                switch (ciclo)
+                {
+                    case 1:
+                        StartCoroutine("Proyectil1");
+                        break;
+                    case 2:
+                        StartCoroutine("Proyectil2");
+                        break;
+                    case 3:
+                        StartCoroutine("Proyectil3");
+                        break;
+                    case 4:
+                        StartCoroutine("Proyectil4");
+                        break;
+                    case 5:
+                        StartCoroutine("Proyectil5");
+                        break;
+
+                }
+            }
+            
             
             timing = 0;
         }

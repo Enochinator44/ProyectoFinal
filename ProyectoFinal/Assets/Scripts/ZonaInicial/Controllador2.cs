@@ -42,7 +42,7 @@ public class Controllador2 : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
@@ -215,7 +215,10 @@ public class Controllador2 : MonoBehaviour
         // Mode - Air
         else
         {
+
+            
             state = MovementState.air;
+            
         }
 
         if (Mathf.Abs(desiredMoveSpeed-lastDesiredMoveSpeed)>4f && moveSpeed!=0)
@@ -395,7 +398,7 @@ public class Controllador2 : MonoBehaviour
         return velocityXZ + velocityY;
     }
     
-
+    
    
        
 }

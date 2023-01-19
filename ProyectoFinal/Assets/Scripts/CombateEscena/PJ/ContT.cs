@@ -90,8 +90,8 @@ public class ContT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
 
+        transform.LookAt(enemigo.transform);
         horizontalMove = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");
 
