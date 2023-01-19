@@ -10,24 +10,22 @@ Material:
   m_Name: Trail
   m_Shader: {fileID: -6465566751694194690, guid: a7554446f1eaef14b8e2c3f102346923, type: 3}
   m_ValidKeywords:
+  - _ALPHATEST_ON
+  - _ALPHATOMASK_ON
   - _DISABLE_SSR_TRANSPARENT
   - _DOUBLESIDED_ON
   - _SURFACE_TYPE_TRANSPARENT
-  - _TRANSPARENT_WRITES_MOTION_VEC
-  m_InvalidKeywords:
-  - _ALPHATEST_ON
-  - _ALPHATOMASK_ON
-  m_LightmapFlags: 1
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3000
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3001
   stringTagMap:
     MotionVector: User
     RenderType: Transparent
   disabledShaderPasses:
   - MOTIONVECTORS
   - TransparentDepthPostpass
-  - TransparentBackface
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -50,22 +48,23 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
+    - _AlphaClip: 0.227
     - _AlphaCutoffEnable: 1
-    - _AlphaDstBlend: 1
+    - _AlphaDstBlend: 10
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 1
     - _AlphaToMaskInspectorValue: 1
-    - _BlendMode: 1
+    - _BlendMode: 0
     - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 0
-    - _CullModeForward: 0
+    - _CullModeForward: 2
     - _DepthOffsetEnable: 0
-    - _Dissolve: 20
+    - _Dissolve: 30
     - _DoubleSidedEnable: 1
-    - _DoubleSidedGIMode: 0
+    - _DoubleSidedGIMode: 2
     - _DoubleSidedNormalMode: 2
-    - _DstBlend: 1
-    - _EnableBlendModePreserveSpecularLighting: 0
+    - _DstBlend: 10
+    - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 0
     - _OpaqueCullMode: 2
     - _RayTracing: 1
@@ -87,27 +86,27 @@ Material:
     - _StencilWriteMaskMV: 40
     - _SupportDecals: 1
     - _SurfaceType: 1
-    - _TransparentBackfaceEnable: 0
+    - _TransparentBackfaceEnable: 1
     - _TransparentCullMode: 1
     - _TransparentDepthPostpassEnable: 0
     - _TransparentDepthPrepassEnable: 1
-    - _TransparentSortPriority: 0
-    - _TransparentWritingMotionVec: 1
+    - _TransparentSortPriority: 1
+    - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 1
-    - _UseShadowThreshold: 1
+    - _UseShadowThreshold: 0
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 3
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - _Color01: {r: 0.24672163, g: 0, b: 0.9811321, a: 0}
-    - _Color02: {r: 0.8207547, g: 0, b: 0.1667158, a: 0}
-    - _DissolveSpeed: {r: -0.5, g: 0, b: 0, a: 0}
+    - _Color01: {r: 0, g: 0.165558, b: 0.8679245, a: 0}
+    - _Color02: {r: 0.7735849, g: 0.02226675, b: 0, a: 0}
+    - _DissolveSpeed: {r: -0.5, g: -1, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainSpeed: {r: -1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &1302080097592748631
+--- !u!114 &444219865197679092
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

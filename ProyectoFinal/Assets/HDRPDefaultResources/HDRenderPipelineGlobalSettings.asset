@@ -31,7 +31,7 @@ MonoBehaviour:
     materialQuality: 0
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
     bitDatas:
-      data1: 135310754214733
+      data1: 135448193168205
       data2: 4539628428684460056
     lodBias: 1
     lodBiasMode: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
     maximumLODLevelMode: 0
     maximumLODLevelQualityLevel: 0
     sssQualityMode: 0
-    sssQualityLevel: 0
+    sssQualityLevel: 1
     sssCustomSampleBudget: 20
     msaaMode: 1
     materialQuality: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
     maximumLODLevelMode: 0
     maximumLODLevelQualityLevel: 0
     sssQualityMode: 0
-    sssQualityLevel: 0
+    sssQualityLevel: 1
     sssCustomSampleBudget: 20
     msaaMode: 1
     materialQuality: 0
