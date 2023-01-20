@@ -35,7 +35,7 @@ public class WallRunning : MonoBehaviour
 
     [Header("ExitingWallrun")]
 
-    private bool exitingWall;
+    public bool exitingWall;
     public float exitWallTime;
     public float exitWallTimer;
     [Header("Referencias")]
@@ -202,6 +202,13 @@ public class WallRunning : MonoBehaviour
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(forceToApply, ForceMode.Impulse);
+
+        StartCoroutine(AfterJump());
+    }
+    private IEnumerator AfterJump()
+    {
+        yield return new WaitForSeconds(0.2f);
+        exitingWall = false;
     }
 
 
