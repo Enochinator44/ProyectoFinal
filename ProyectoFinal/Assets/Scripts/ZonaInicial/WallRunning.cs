@@ -54,6 +54,11 @@ public class WallRunning : MonoBehaviour
     {
         CheckForWall();
         StateMachine();
+        
+        Debug.Log(wallLeft);
+        Debug.Log(wallRight);
+        
+
     }
 
     private void CheckForWall()
@@ -63,7 +68,7 @@ public class WallRunning : MonoBehaviour
 
         if (wallRight==false&&wallLeft==false)
         {
-            pm.wallrunning = false;
+            StopWallRun();
         }
 
         //if (!wallRight && !wallLeft&& )
@@ -74,7 +79,7 @@ public class WallRunning : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (pm.wallrunning)
+        if (pm.state == Controllador2.MovementState.wallrunning)
         {
             WallRunningMovement();
         }
@@ -101,32 +106,41 @@ public class WallRunning : MonoBehaviour
         {
             //Empieza la movida
 
-            if (!pm.wallrunning)
+
+            
+            if (pm.state != Controllador2.MovementState.wallrunning)
             {
+
+                
                 Debug.Log("empieza el wallrun");
                 StartWallRun();
-                if (wallRunTimer>0)
-                {
-                    wallRunTimer -= Time.deltaTime;
-                }
-                if (wallRunTimer<=0&&pm.wallrunning)
-                {
-                    exitingWall = true;
-                    exitWallTimer = exitWallTime;
-                }
+                //if (wallRunTimer>0)
+                //{
+                //    wallRunTimer -= Time.deltaTime;
+                //}
+                //if (wallRunTimer<=0 && pm.wallrunning == true)
+                //{
+                //    exitingWall = true;
+                //    exitWallTimer = exitWallTime;
+                //}
 
-                if (Input.GetKeyDown(jumpKey))
-                {
-                    WallJump();
-                }
+                
+            }
+
+            if (Input.GetKeyDown(jumpKey) && pm.state == Controllador2.MovementState.wallrunning)
+            {
+                WallJump();
+                Debug.Log("Jump");
             }
 
             //Estado2 - Exiting
-            else if (exitingWall)
+            if (exitingWall)
             {
-                if (pm.wallrunning)
+                if (pm.state == Controllador2.MovementState.wallrunning)
                 {
                     StopWallRun();
+                    Debug.Log("Exit " + exitingWall);
+                    StartCoroutine(AfterJump());
                 }
                 if (exitWallTimer>0)
                 {
@@ -137,22 +151,22 @@ public class WallRunning : MonoBehaviour
                     exitingWall = false;
                 }
             }
-            else
-            {
-                if (pm.wallrunning)
-                {
-                    StopWallRun();
-                }
-            }
+            //else
+            //{
+            //    if (pm.wallrunning)
+            //    {
+            //        StopWallRun();
+            //    }
+            //}
 
         }
     }
 
     private void StartWallRun()
     {
-        pm.wallrunning = true;
+        pm.state = Controllador2.MovementState.wallrunning;
 
-        wallRunTimer = maxWallRunTime;
+        //wallRunTimer = maxWallRunTime;
     }
 
     private void WallRunningMovement()
@@ -171,7 +185,7 @@ public class WallRunning : MonoBehaviour
 
         rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
 
-        if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0)) ;
+        if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0))
         {
             rb.AddForce(-wallNormal * 100, ForceMode.Force);
         }
@@ -189,13 +203,13 @@ public class WallRunning : MonoBehaviour
 
     private void StopWallRun()
     {
-        pm.wallrunning = false;
+        pm.state = Controllador2.MovementState.air;
     }
 
     private void WallJump()
     {
-        exitingWall = true;
-        exitWallTimer = exitWallTime;
+        //StopWallRun();
+        //exitWallTimer = exitWallTime;
         Vector3 wallnormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
 
         Vector3 forceToApply = transform.up * wallJumpUpForce + wallnormal * wallJumpSideForce;
@@ -203,11 +217,12 @@ public class WallRunning : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(forceToApply, ForceMode.Impulse);
 
-        StartCoroutine(AfterJump());
+        exitingWall = true;
+        
     }
     private IEnumerator AfterJump()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         exitingWall = false;
     }
 

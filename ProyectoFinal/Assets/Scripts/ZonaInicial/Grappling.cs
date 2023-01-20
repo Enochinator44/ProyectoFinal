@@ -101,7 +101,7 @@ public class Grappling : MonoBehaviour
 
     private void ExecuteGrapple()
     {
-        pm.freeze = false;
+        pm.state = Controllador2.MovementState.grappling;
         prueba.SetActive(false);
 
 
@@ -123,8 +123,7 @@ public class Grappling : MonoBehaviour
     public void StopGrapple()
     {
         prueba.SetActive(false);
-        pm.freeze = false;
-        grappling = false;
+        pm.state = Controllador2.MovementState.wallrunning;
         grapplingCdTimmer = grapplingCd;
         lr.enabled = false;
     }

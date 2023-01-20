@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2157.7617, g: 2259.9023, b: 3277.5938, a: 1}
+  m_IndirectSpecularColor: {r: 2172.0684, g: 2282.6055, b: 3329.168, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -323,7 +323,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32178
+  m_Name: pb_Mesh34184
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -538,12 +538,7 @@ MonoBehaviour:
   maxSlopeAngle: 40
   grappleFov: 95
   orientation: {fileID: 1176425554}
-  state: 0
-  freeze: 0
-  sliding: 0
-  activeGrapple: 0
-  swinging: 0
-  wallrunning: 0
+  state: 3
 --- !u!54 &140668634
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -568,7 +563,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140668632}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -215.37, y: -18.33, z: -36.3}
+  m_LocalPosition: {x: -336.6, y: 43.8, z: 135.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -645,7 +640,6 @@ MonoBehaviour:
   wallJumpSideForce: 20
   wallClimbSpeed: 3
   maxWallRunTime: 0.3
-  wallRunTimer: 0
   jumpKey: 32
   upwardsRunKey: 113
   downwardsRunKey: 101
@@ -655,6 +649,7 @@ MonoBehaviour:
   miniJumpHeight: 2
   wallLeft: 0
   wallRight: 0
+  exitingWall: 0
   exitWallTime: 0.6
   exitWallTimer: 0
   orientation: {fileID: 1176425554}
@@ -1075,7 +1070,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32606
+  m_Name: pb_Mesh34632
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5537,7 +5532,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 846095374}
-  m_LocalRotation: {x: 0.07082031, y: -0.00000001716318, z: 0.0000000012185615, w: 0.9974891}
+  m_LocalRotation: {x: 0.07082035, y: 1e-45, z: -0, w: 0.9974891}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6110,7 +6105,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074587199}
-  m_LocalRotation: {x: 0.047663808, y: 0.000000017320573, z: -8.265038e-10, w: 0.99886346}
+  m_LocalRotation: {x: 0.047663838, y: 0.000000017320573, z: -8.265043e-10, w: 0.99886346}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6353,7 +6348,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1097999282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -215.37, y: -16.38, z: -46.53}
+  m_LocalPosition: {x: -336.6, y: 45.75, z: 125.07001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7449,7 +7444,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1476038817}
-  m_LocalRotation: {x: 0.094039015, y: -0.000000017657332, z: 0.0000000016678691, w: 0.9955685}
+  m_LocalRotation: {x: 0.09403905, y: 0.000000017130134, z: -0.0000000016180719, w: 0.9955685}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9329,8 +9324,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823688464}
-  m_LocalRotation: {x: 0.07082031, y: -0.00000003432636, z: 0.0000000024371225, w: 0.9974891}
-  m_LocalPosition: {x: -208.51999, y: 2.455, z: -52.39}
+  m_LocalRotation: {x: 0.07082035, y: -0, z: -0, w: 0.9974891}
+  m_LocalPosition: {x: -329.75, y: 64.585, z: 119.21001}
   m_LocalScale: {x: 0.015274717, y: 0.015274718, z: 0.0152747175}
   m_ConstrainProportionsScale: 0
   m_Children: []

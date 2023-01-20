@@ -40,19 +40,19 @@ public class Sliding : MonoBehaviour
         if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
             StartSlide();
 
-        if (Input.GetKeyUp(slideKey) && pm.sliding)
+        if (Input.GetKeyUp(slideKey) && pm.state == Controllador2.MovementState.sliding)
             StopSlide();
     }
 
     private void FixedUpdate()
     {
-        if (pm.sliding)
+        if (pm.state == Controllador2.MovementState.sliding)
             SlidingMovement();
     }
 
     private void StartSlide()
     {
-        pm.sliding = true;
+        pm.state = Controllador2.MovementState.sliding;
 
         playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
@@ -84,7 +84,7 @@ public class Sliding : MonoBehaviour
 
     private void StopSlide()
     {
-        pm.sliding = false;
+        pm.state = Controllador2.MovementState.walking;
 
         playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
     }

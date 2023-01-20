@@ -76,11 +76,7 @@ public class Controllador2 : MonoBehaviour
         air
     }
 
-    public bool freeze;
-    public bool sliding;
-    public bool activeGrapple;
-    public bool swinging;
-    public bool wallrunning;
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -101,7 +97,7 @@ public class Controllador2 : MonoBehaviour
         StateHandler();
 
         // handle drag
-        if (grounded && !activeGrapple)
+        if (grounded && state == MovementState.grappling)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
@@ -120,7 +116,7 @@ public class Controllador2 : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded && state != MovementState.wallrunning)
         {
             readyToJump = false;
 
@@ -132,6 +128,7 @@ public class Controllador2 : MonoBehaviour
         // start crouch
         if (Input.GetKeyDown(crouchKey))
         {
+            state = Controllador2.MovementState.crouching;
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
         }
@@ -139,87 +136,69 @@ public class Controllador2 : MonoBehaviour
         // stop crouch
         if (Input.GetKeyUp(crouchKey))
         {
+            state = Controllador2.MovementState.walking;
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
     }
 
     private void StateHandler()
     {
-        // Mode - Freeze
-        if (freeze)
+        
+
+        switch (state)
         {
-            state = MovementState.freeze;
-            moveSpeed = 0;
-            rb.velocity = Vector3.zero;
-        }
+            case MovementState.freeze:
+                
+                moveSpeed = 0;
+                rb.velocity = Vector3.zero;
+                break;
 
-        // Mode - Grappling
-        else if (activeGrapple)
-        {
-            state = MovementState.grappling;
-            moveSpeed = sprintSpeed;
-        }
+            case MovementState.grappling:
+                
+                moveSpeed = sprintSpeed;
+                break;
 
-        // Mode - Swinging
-        else if (swinging)
-        {
-            state = MovementState.swinging;
-            moveSpeed = swingSpeed;
-        }
+            case MovementState.swinging:
+                
+                moveSpeed = swingSpeed;
+                break;
 
-        //Mode -WallRunning
-        if (wallrunning)
-        {
-            state = MovementState.wallrunning;
-            desiredMoveSpeed = wallrunSpeed;
-            
-        }
+            case MovementState.wallrunning:
+                
+                desiredMoveSpeed = wallrunSpeed;
+                break;
 
-        // Mode - Sliding
+            case MovementState.sliding:
+                
 
-        if (sliding)
-        {
-            state = MovementState.sliding;
+                if (OnSlope() && rb.velocity.y < 0.1f)
+                {
+                    desiredMoveSpeed = slideSpeed;
+                }
+                else
+                {
+                    desiredMoveSpeed = sprintSpeed;
+                }
+                break;
 
-            if (OnSlope()&& rb.velocity.y<0.1f)
-            {
-                desiredMoveSpeed = slideSpeed;
-            }
-            else
-            {
+            case MovementState.crouching:
+                
+                desiredMoveSpeed = crouchSpeed;
+                break;
+
+            case MovementState.sprinting:
                 desiredMoveSpeed = sprintSpeed;
-            }
-        }
+                break;
 
-        // Mode - Crouching
-        else if (Input.GetKey(crouchKey))
-        {
-            state = MovementState.crouching;
-            desiredMoveSpeed = crouchSpeed;
-        }
+            case MovementState.walking:
+                desiredMoveSpeed = walkSpeed;
+                break;
+            case MovementState.air:
+                break;
 
-        // Mode - Sprinting
-        else if (grounded && Input.GetKey(sprintKey))
-        {
-            state = MovementState.sprinting;
-            desiredMoveSpeed = sprintSpeed;
-        }
 
-        // Mode - Walking
-        else if (grounded)
-        {
-            state = MovementState.walking;
-            desiredMoveSpeed = walkSpeed;
         }
-
-        // Mode - Air
-        else
-        {
-
-            
-            state = MovementState.air;
-            
-        }
+        
 
         if (Mathf.Abs(desiredMoveSpeed-lastDesiredMoveSpeed)>4f && moveSpeed!=0)
         {
@@ -264,8 +243,8 @@ public class Controllador2 : MonoBehaviour
 
     private void MovePlayer()
     {
-        if (activeGrapple) return;
-        if (swinging) return;
+        if (state == MovementState.grappling) return;
+        if (state == MovementState.swinging) return;
 
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
@@ -293,7 +272,7 @@ public class Controllador2 : MonoBehaviour
 
     private void SpeedControl()
     {
-        if (activeGrapple) return;
+        if (state == MovementState.grappling) return;
 
         // limiting speed on slope
         if (OnSlope() && !exitingSlope)
@@ -335,7 +314,7 @@ public class Controllador2 : MonoBehaviour
     private bool enableMovementOnNextTouch;
     public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
     {
-        activeGrapple = true;
+        state = MovementState.grappling;
 
         velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
         Invoke(nameof(SetVelocity), 0.1f);
@@ -354,8 +333,9 @@ public class Controllador2 : MonoBehaviour
 
     public void ResetRestrictions()
     {
-        activeGrapple = false;
-        
+        state = MovementState.grappling;
+
+
     }
 
     private void OnCollisionEnter(Collision collision)
