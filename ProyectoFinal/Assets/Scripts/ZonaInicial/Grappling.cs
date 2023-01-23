@@ -102,6 +102,7 @@ public class Grappling : MonoBehaviour
     private void ExecuteGrapple()
     {
         pm.state = Controllador2.MovementState.grappling;
+        pm.jumpDown=0;
         prueba.SetActive(false);
 
 
@@ -123,6 +124,7 @@ public class Grappling : MonoBehaviour
     public void StopGrapple()
     {
         prueba.SetActive(false);
+        pm.jumpDown = 3;
         pm.state = Controllador2.MovementState.wallrunning;
         grapplingCdTimmer = grapplingCd;
         lr.enabled = false;

@@ -13,7 +13,7 @@ public class Sliding : MonoBehaviour
     [Header("Sliding")]
     public float maxSlideTime;
     public float slideForce;
-    private float slideTimer;
+    public float slideTimer;
 
     public float slideYScale;
     private float startYScale;
@@ -56,6 +56,7 @@ public class Sliding : MonoBehaviour
 
         playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        StartCoroutine(CstopSlide(0.75f));
 
         slideTimer = maxSlideTime;
     }
@@ -78,14 +79,22 @@ public class Sliding : MonoBehaviour
             rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
         }
 
-        if (slideTimer <= 0)
-            StopSlide();
+        
+        //if (slideTimer <= 0)
+        //    StopSlide();
     }
 
     private void StopSlide()
     {
+        Debug.Log("StopSlide");
         pm.state = Controllador2.MovementState.walking;
 
         playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
+    }
+
+    public IEnumerator CstopSlide(float st)
+    {
+        yield return new WaitForSeconds(st);
+        StopSlide();
     }
 }

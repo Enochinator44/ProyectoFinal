@@ -25,6 +25,7 @@ public class Controllador2 : MonoBehaviour
 
     [Header("Jumping")]
     public float jumpForce;
+    public float jumpDown;
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
@@ -121,6 +122,7 @@ public class Controllador2 : MonoBehaviour
             readyToJump = false;
 
             Jump();
+            //StartCoroutine(prueba());
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
@@ -194,6 +196,8 @@ public class Controllador2 : MonoBehaviour
                 desiredMoveSpeed = walkSpeed;
                 break;
             case MovementState.air:
+                rb.AddForce(-transform.up* jumpDown, ForceMode.Acceleration);
+
                 break;
 
 
@@ -266,13 +270,18 @@ public class Controllador2 : MonoBehaviour
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
             state = MovementState.walking;
+            rb.mass = 1.25f;
+           
         }
             
 
         // in air
         else if (!grounded)
         {
+
+            
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            
             
         }
         else if (!grounded && state != MovementState.wallrunning)
@@ -332,7 +341,7 @@ public class Controllador2 : MonoBehaviour
         state = MovementState.grappling;
 
         velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
-        Invoke(nameof(SetVelocity), 0.1f);
+        Invoke(nameof(SetVelocity), 3f);
 
         Invoke(nameof(ResetRestrictions), 3f);
     }
@@ -393,6 +402,12 @@ public class Controllador2 : MonoBehaviour
         return velocityXZ + velocityY;
     }
     
+    IEnumerator prueba()
+    {
+        yield return new WaitForSeconds(0.3f);
+        rb.AddForce(-transform.up * jumpDown, ForceMode.Acceleration);
+
+    }
     
    
        
