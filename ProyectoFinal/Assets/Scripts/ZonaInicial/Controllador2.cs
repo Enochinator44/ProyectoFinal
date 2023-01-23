@@ -231,8 +231,11 @@ public class Controllador2 : MonoBehaviour
                 time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
             }
             else
-            
+            {
                 time += Time.deltaTime * speedIncreaseMultiplier;
+            }
+            
+                
             
             
             yield return null;
@@ -260,11 +263,23 @@ public class Controllador2 : MonoBehaviour
 
         // on ground
         else if (grounded)
+        {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            state = MovementState.walking;
+        }
+            
 
         // in air
         else if (!grounded)
+        {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            
+        }
+        else if (!grounded && state != MovementState.wallrunning)
+        {
+            state = MovementState.air;
+        }
+            
 
         // turn gravity off while on slope
         rb.useGravity = !OnSlope();

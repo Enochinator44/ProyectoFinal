@@ -133,7 +133,7 @@ public class ContT : MonoBehaviour
         }
         else
         {
-            Debug.Log(1.0f / cdAtaqueCargado * Time.unscaledDeltaTime);
+            
             //Debug.Log(cooldownA.fillAmount + "a");
 
             cooldownA.fillAmount += 1.0f / 5 * Time.unscaledDeltaTime;
@@ -147,14 +147,6 @@ public class ContT : MonoBehaviour
         {
             cooldownE.fillAmount += 1.0f / 10 * Time.unscaledDeltaTime;
         }
-
-
-
-
-
-
-
-
 
     }
 
@@ -174,7 +166,10 @@ public class ContT : MonoBehaviour
 
     public void PlayerSkills()
     {
-        AtaqueCargado();
+        
+            AtaqueCargado();
+        
+        
 
         if ( Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -418,12 +413,13 @@ public class ContT : MonoBehaviour
     void AtaqueCargado()
     {
 
-        if (Input.GetKey(KeyCode.Mouse1))
+        if (Input.GetKey(KeyCode.F) && bAtaqueCargado == true)
         {
-            bAtaqueCargado = false;
-            cdAtaqueCargado = 0;
-            cooldownA.fillAmount = 0;
 
+
+
+            cooldownA.fillAmount = 0;
+            cdAtaqueCargado = 0;
             player.enabled = false;
             transform.LookAt(enemigo.transform.position);
             tAtaqueCargado += Time.deltaTime;
@@ -432,19 +428,31 @@ public class ContT : MonoBehaviour
             Debug.Log("Cargando Ataque");
 
         }
-        if (Input.GetKeyUp(KeyCode.Mouse1) || tAtaqueCargado >= 3f)
+        else if (Input.GetKeyUp(KeyCode.F) && tAtaqueCargado >= 3f)
         {
             RaycastHit hit;
             Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 100 * tAtaqueCargado);
 
             Debug.Log("AtaqueCargado");
+            
 
-
-
-
-            tAtaqueCargado = 0;
+            bAtaqueCargado = false;
             player.enabled = true;
 
+        }
+        else if (Input.GetKeyUp(KeyCode.F) && tAtaqueCargado < 3f)
+        {
+            
+            
+            if (bAtaqueCargado == true)
+            {
+                tAtaqueCargado = 0;
+                cooldownA.fillAmount = 0;
+                bAtaqueCargado = false;
+            }
+            player.enabled = true;
+
+            
         }
        
     }

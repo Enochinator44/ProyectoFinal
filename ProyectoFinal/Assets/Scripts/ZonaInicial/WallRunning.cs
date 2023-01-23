@@ -79,8 +79,10 @@ public class WallRunning : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log(pm.state);
         if (pm.state == Controllador2.MovementState.wallrunning)
         {
+            
             WallRunningMovement();
         }
     }
