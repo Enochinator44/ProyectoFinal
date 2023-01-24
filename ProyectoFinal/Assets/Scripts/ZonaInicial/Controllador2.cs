@@ -48,7 +48,9 @@ public class Controllador2 : MonoBehaviour
     [Header("Slope Handling")]
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
-    private bool exitingSlope;
+    public bool exitingSlope;
+    
+
 
     [Header("Camera Effects")]
     
@@ -341,7 +343,7 @@ public class Controllador2 : MonoBehaviour
         state = MovementState.grappling;
 
         velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
-        Invoke(nameof(SetVelocity), 3f);
+        Invoke(nameof(SetVelocity), 0.1f);
 
         Invoke(nameof(ResetRestrictions), 3f);
     }
@@ -377,10 +379,12 @@ public class Controllador2 : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
+            
+
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
-
+        
         return false;
     }
 
@@ -404,7 +408,7 @@ public class Controllador2 : MonoBehaviour
     
     IEnumerator prueba()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.6f);
         rb.AddForce(-transform.up * jumpDown, ForceMode.Acceleration);
 
     }
