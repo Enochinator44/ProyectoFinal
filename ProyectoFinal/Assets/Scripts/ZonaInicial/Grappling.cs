@@ -133,7 +133,7 @@ public class Grappling : MonoBehaviour
     private void CheckGrapple()
     {
         
-        Physics.Raycast(cam.transform.position, cam.transform.forward, 25f, whatIsGrappleable);
+        Physics.Raycast(cam.transform.position, cam.transform.forward, 50f, whatIsGrappleable);
 
         
         //prueba.SetActive(true);
