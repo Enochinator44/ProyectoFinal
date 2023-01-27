@@ -9,7 +9,7 @@ public class ContT : MonoBehaviour
     private float verticalMove;
 
     public Rigidbody playerRB;
-    public float playerSpeed;
+    public float playerSpeed, dashCool;
     private Vector3 movPlayer;
     public float gravity = 9.8f;
     public float fallVelocity;
@@ -64,6 +64,7 @@ public class ContT : MonoBehaviour
     public float tAtaqueCargado;
     public Image cooldownA;
     public Image cooldownE;
+    Vector3 desiredMoveDirection;
     //Variables Animacion
 
     public Animator playerAnimatorController;
@@ -97,19 +98,25 @@ public class ContT : MonoBehaviour
 
         //playerRB.velocity = new Vector3(horizontalMove, 0, verticalMove) * playerSpeed;
 
-        //transform.Translate(playerInput * playerSpeed*Time.unscaledDeltaTime, Space.World);
-        
-        playerInput = new Vector3(horizontalMove, 0, verticalMove);
-        playerInput = Vector3.ClampMagnitude(playerInput, 1);
+        var forward = mainCamera.transform.forward;
+        var right = mainCamera.transform.right;
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+        desiredMoveDirection = forward * verticalMove + right * horizontalMove;
+        transform.Translate(desiredMoveDirection * playerSpeed * Time.deltaTime, Space.World);
+        //playerInput = new Vector3(horizontalMove, 0, verticalMove);
+        //playerInput = Vector3.ClampMagnitude(playerInput, 1);
+        //transform.Translate(playerInput * playerSpeed * Time.unscaledDeltaTime);
 
-       
 
-        playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * playerSpeed);
+        //playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * playerSpeed);
 
         //camDirection();
 
-        movPlayer = playerInput.x * transform.right + playerInput.z * transform.forward;
-        movPlayer += movPlayer * playerSpeed * velocidadmodificada;
+        //movPlayer = playerInput.x * transform.right + playerInput.z * transform.forward;
+        //movPlayer += movPlayer * playerSpeed * velocidadmodificada;
 
 
 
@@ -122,7 +129,7 @@ public class ContT : MonoBehaviour
         PlayerSkills();
 
         //player.Move(movPlayer * Time.unscaledDeltaTime);
-        player.SimpleMove(playerInput * playerSpeed);
+        //player.SimpleMove(playerInput * playerSpeed);
 
         cdAtaqueCargado += Time.deltaTime;
         cdEscudo += Time.deltaTime;
@@ -211,7 +218,12 @@ public class ContT : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(DashCoroutine());
+            if (dashCool > 1)
+            {
+                StartCoroutine(DashCoroutine());
+                dashCool = 0;
+            }
+            
         }
         else
         {
@@ -219,6 +231,7 @@ public class ContT : MonoBehaviour
             playerAnimatorController.SetBool("PlayerRun", Run);
             velocidadmodificada = 1;
         }
+        dashCool += Time.unscaledDeltaTime;
         if (Input.GetKey(KeyCode.LeftControl))
         {
             velocidadmodificada = 0.5f;
@@ -311,13 +324,13 @@ public class ContT : MonoBehaviour
         while (dashtime > 0)
         {
             Vector3  v = new Vector3(horizontalMove, 0, verticalMove);
-            transform.Translate( v.normalized* (dashSpeed * 2) * Time.unscaledDeltaTime, Space.World);
+            transform.Translate( desiredMoveDirection* (dashSpeed * 2) * Time.unscaledDeltaTime, Space.World);
             dashtime -= Time.unscaledDeltaTime;
             Debug.Log("dashtime");
-            yield return null;
+            yield return null;  
         }
 
-        dashtime = 0.3f;
+        dashtime = 1;
         player.enabled = true;
     }
    

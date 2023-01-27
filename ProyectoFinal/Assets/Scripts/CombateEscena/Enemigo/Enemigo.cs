@@ -29,7 +29,7 @@ public class Enemigo : MonoBehaviour
 
         timing2 += Time.deltaTime;
 
-        if (timing2 >=45)
+        if (timing2 >=15)
         {
             exclusivo = Random.Range(0, 5);
             while (exclusivo == ciclo2)
