@@ -167,7 +167,7 @@ public class WallRunning : MonoBehaviour
     private void StartWallRun()
     {
         pm.state = Controllador2.MovementState.wallrunning;
-
+        StartCoroutine(WallRunTime());
         //wallRunTimer = maxWallRunTime;
     }
 
@@ -206,6 +206,7 @@ public class WallRunning : MonoBehaviour
     private void StopWallRun()
     {
         pm.state = Controllador2.MovementState.air;
+        Debug.Log("StopWallrun");
     }
 
     private void WallJump()
@@ -226,6 +227,12 @@ public class WallRunning : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         exitingWall = false;
+    }
+
+    private IEnumerator WallRunTime()
+    {
+        yield return new WaitForSeconds(0.5f);
+        StopWallRun();
     }
 
 
