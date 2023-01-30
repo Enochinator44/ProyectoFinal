@@ -5,7 +5,7 @@ using UnityEngine;
 public class pChild : MonoBehaviour
 {
     public GameObject player;
-    public  Platform plt;
+    private  Platform plt;
     public GameObject movPlat;
 
     public void Start()
@@ -16,10 +16,10 @@ public class pChild : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         player.transform.parent = transform;
-        if (transform.tag=="DestroyPlatform")
-        {
-            StartCoroutine( plt.DestroyPlatform());
-        }
+        //if (transform.tag=="DestroyPlatform")
+        //{
+        //    StartCoroutine( plt.DestroyPlatform());
+        //}
     }
     private void OnTriggerExit(Collider other)
     {

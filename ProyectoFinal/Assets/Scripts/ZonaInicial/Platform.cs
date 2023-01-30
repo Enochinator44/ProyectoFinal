@@ -6,11 +6,12 @@ public class Platform : MonoBehaviour
 {
     [Header("Reference")]
 
-    public GameObject player;
+    
     public Rigidbody[] rbPlatform;
     public Transform[] platformPoints;
     public Transform[] platformPoints2;
     public Transform[] platformPoints3;
+    public GameObject player;
 
 
     [Header("PlatformInfo")]
@@ -31,11 +32,14 @@ public class Platform : MonoBehaviour
         if (moveNext)
         {
             StopCoroutine(PlatformWaitTime());
-            rbPlatform[0].MovePosition(Vector3.MoveTowards(rbPlatform[0].transform.position, platformPoints[pNextPos].position, pSpeed * Time.deltaTime));
+            for (int i = 0; i < rbPlatform.Length; i++)
+            {
+                rbPlatform[i].MovePosition(Vector3.MoveTowards(rbPlatform[i].transform.position, platformPoints[pNextPos].position, pSpeed * Time.deltaTime));
+            }
+          
+            
 
-            rbPlatform[1].MovePosition(Vector3.MoveTowards(rbPlatform[1].transform.position, platformPoints2[pNextPos].position, pSpeed * Time.deltaTime));
-
-            rbPlatform[2].MovePosition(Vector3.MoveTowards(rbPlatform[2].transform.position, platformPoints3[pNextPos].position, pSpeed * Time.deltaTime));
+           
         }
        
         if (Vector3.Distance(rbPlatform[0].position,platformPoints[pNextPos].position)<=0)
@@ -58,8 +62,9 @@ public class Platform : MonoBehaviour
     public IEnumerator DestroyPlatform()
     {
         Debug.Log("DestroyPlatfomr");
+        player.transform.parent = null;
         yield return new WaitForSeconds(pDestroy);
-        Destroy(rbPlatform[2]);
+        Destroy(this.gameObject);
     }
     public IEnumerator PlatformWaitTime()
     {
@@ -67,7 +72,15 @@ public class Platform : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         moveNext = true;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (transform.tag == "DestroyPlatform")
+        {
+            StartCoroutine(DestroyPlatform());
+        }
+    }
 
-    
+
 
 }
