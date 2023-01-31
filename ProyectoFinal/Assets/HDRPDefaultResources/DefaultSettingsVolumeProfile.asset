@@ -255,11 +255,11 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   threshold:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.11
+    m_Value: 0.013
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
@@ -299,9 +299,9 @@ MonoBehaviour:
   active: 1
   skyType:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 1
   cloudType:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   skyAmbientMode:
     m_OverrideState: 0
@@ -487,7 +487,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.586
+    m_Value: 0.509
   directLightingStrength:
     m_OverrideState: 0
     m_Value: 0

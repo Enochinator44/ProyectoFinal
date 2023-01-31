@@ -153,7 +153,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
-    - _Dissolve: -1
+    - _Dissolve: 1.2
     - _DissolveEdgeThickness: 0.08
     - _DoubleSidedEnable: 0
     - _DoubleSidedGIMode: 0

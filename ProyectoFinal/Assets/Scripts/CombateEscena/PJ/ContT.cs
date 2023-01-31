@@ -178,12 +178,7 @@ public class ContT : MonoBehaviour
         
         
 
-        if ( Input.GetKeyDown(KeyCode.Alpha1))
-        {
-           Debug.Log("shake");
-            StartCoroutine(cameraShake.Shake(.15f , 4f));
-
-        }
+        
 
         //AtaquesBasicos();
         if (Input.GetKeyDown(KeyCode.Mouse0) && bCombo == false)
