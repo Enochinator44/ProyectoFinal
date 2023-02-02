@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7686902457489859229
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
 --- !u!114 &-646536827038690269
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -24,28 +37,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Swirl
-  m_Shader: {fileID: 4800000, guid: c4edd00ff2db5b24391a4fcb1762e459, type: 3}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ValidKeywords:
-  - _ALPHATEST_ON
-  - _ENABLE_FOG_ON_TRANSPARENT
-  - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords:
-  - _ALPHAPREMULTIPLY_ON
-  - _DISABLE_SSR_TRANSPARENT
-  - _DOUBLESIDED_ON
-  - _MATERIAL_FEATURE_IRIDESCENCE
-  - _NORMALMAP_TANGENT_SPACE
-  - _NORMALMAP_TANGENT_SPACE0
-  - _NORMALMAP_TANGENT_SPACE1
-  - _NORMALMAP_TANGENT_SPACE2
-  - _NORMALMAP_TANGENT_SPACE3
+  - _EMISSION
+  m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3003
+  m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
-    RenderType: Transparent
+    RenderType: Opaque
   disabledShaderPasses:
   - MOTIONVECTORS
   m_SavedProperties:
@@ -72,6 +74,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -127,6 +133,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -144,6 +154,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailMap3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -200,7 +218,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8bde04db582d0a04e898d87605455985, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
@@ -280,6 +298,18 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapOS3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -378,6 +408,7 @@ Material:
     - _ATDistance: 1
     - _AddPrecomputedVelocity: 0
     - _AlbedoAffectEmissive: 0
+    - _AlphaClip: 0
     - _AlphaCutoff: 0.545
     - _AlphaCutoffEnable: 1
     - _AlphaCutoffPostpass: 0.5
@@ -388,6 +419,7 @@ Material:
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
+    - _Blend: 0
     - _BlendMode: 1
     - _BlendOp: 0
     - _BumpScale: 1
@@ -395,6 +427,8 @@ Material:
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
     - _CameraOffset: 0
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
     - _CoatMask: 0
     - _ColorMode: 0
     - _Cull: 0
@@ -403,11 +437,13 @@ Material:
     - _Cutoff: 0.545
     - _DepthFade: 1
     - _DepthOffsetEnable: 0
+    - _DetailAlbedoMapScale: 1
     - _DetailAlbedoScale: 1
     - _DetailAlbedoScale0: 1
     - _DetailAlbedoScale1: 1
     - _DetailAlbedoScale2: 1
     - _DetailAlbedoScale3: 1
+    - _DetailNormalMapScale: 1
     - _DetailNormalScale: 1
     - _DetailNormalScale0: 1
     - _DetailNormalScale1: 1
@@ -456,7 +492,7 @@ Material:
     - _DoubleSidedEnable: 1
     - _DoubleSidedGIMode: 1
     - _DoubleSidedNormalMode: 1
-    - _DstBlend: 1
+    - _DstBlend: 0
     - _EmissionEnabled: 0
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
@@ -466,8 +502,11 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
+    - _EnvironmentReflections: 1
     - _FlipbookMode: 0
+    - _GlossMapScale: 0
     - _Glossiness: 0.5
+    - _GlossyReflections: 0
     - _HeightAmplitude: 0.02
     - _HeightAmplitude0: 0.02
     - _HeightAmplitude1: 0.02
@@ -572,6 +611,7 @@ Material:
     - _NormalScale2: 1
     - _NormalScale3: 1
     - _ObjectScaleAffectTile: 0
+    - _OcclusionStrength: 1
     - _OpacityAsDensity0: 0
     - _OpacityAsDensity1: 0
     - _OpacityAsDensity2: 0
@@ -582,7 +622,10 @@ Material:
     - _PPDMinSamples: 5
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
+    - _Parallax: 0.005
+    - _QueueOffset: 0
     - _RayTracing: 0
+    - _ReceiveShadows: 1
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
@@ -603,11 +646,13 @@ Material:
     - _SmoothnessRemapMin1: 0
     - _SmoothnessRemapMin2: 0
     - _SmoothnessRemapMin3: 0
+    - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
+    - _SpecularHighlights: 1
     - _SpecularOcclusionMode: 1
     - _SrcBlend: 1
     - _StencilRef: 0
@@ -626,6 +671,7 @@ Material:
     - _SubsurfaceMask2: 1
     - _SubsurfaceMask3: 1
     - _SupportDecals: 1
+    - _Surface: 0
     - _SurfaceType: 1
     - _TexWorldScale: 1
     - _TexWorldScale0: 1
@@ -666,11 +712,12 @@ Material:
     - _UseShadowThreshold: 0
     - _VertexColorMode: 0
     - _WindSpeed: 1
+    - _WorkflowMode: 1
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 3
     - _ZTestModeDistortion: 4
     - _ZTestTransparent: 4
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor0: {r: 1, g: 1, b: 1, a: 1}
@@ -680,7 +727,7 @@ Material:
     - _BaseColorMap0_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.18377554, g: 0.028746892, b: 0.35849056, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _ColorBottom: {r: 1, g: 0.36666667, b: 0, a: 0}
     - _ColorTop: {r: 1, g: 0.6666667, b: 0, a: 0}
@@ -704,6 +751,7 @@ Material:
     - _Noise_02_Scale: {r: 1, g: 1, b: 0, a: 0}
     - _Noise_02_Speed: {r: -0.2, g: 0.4, b: 0, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _ThicknessRemap0: {r: 0, g: 1, b: 0, a: 0}
