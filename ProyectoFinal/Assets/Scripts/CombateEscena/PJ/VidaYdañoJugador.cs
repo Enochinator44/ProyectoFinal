@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class VidaYdañoJugador : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int vida = 100;
+    public float vida = 100;
     private bool invencible = false;
     public float tiempoFrenado = 0.2f;
     private Animator Anim;
     public int vidMax = 100;
     public AudioClip otherClip;
+    public Image vidaImg;
 
     private void Start()
     {
@@ -29,15 +31,17 @@ public class VidaYdañoJugador : MonoBehaviour
             Anim.Play("muerte");
             
             StartCoroutine(Espera());
-           
+
+            vidaImg.fillAmount = vida / 100;
         }
     }
-    public void RestarVida(int Cantidad)
+    public void RestarVida(float Cantidad)
     {
         if (!invencible && vida >0)
         {
             vida -= Cantidad;
             Anim.Play("Daño");
+            vidaImg.fillAmount = vida / 100;
             StartCoroutine(Invulnerabilidad());
             StartCoroutine(FrenarVelocidad());
         }
@@ -69,6 +73,6 @@ public class VidaYdañoJugador : MonoBehaviour
     IEnumerator Espera()
     {
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(2);
     }
 }

@@ -12,7 +12,8 @@ public class ProyectilF : MonoBehaviour
     public GameObject gm, enemy, player;
     float count;
     Rigidbody rb;
-    
+    public int daño;
+
 
     public int tipo;
     void Start()
@@ -116,13 +117,16 @@ public class ProyectilF : MonoBehaviour
         else if (collision.gameObject.tag == "Player")
         {
             Debug.Log("colision2");
+            collision.GetComponent<VidaYdañoJugador>().RestarVida(daño);
             Destroy(gameObject);
+            
 
         }else if (collision.gameObject.tag == "Enemy" && parried == true)
         {
             Debug.Log("enemy");
+            collision.GetComponent<VidaYdañoJugador>().RestarVidaEnemigo(daño);
             Destroy(gameObject);
-        }
+        } 
     }
     public void ParryOk()
     {
@@ -139,4 +143,5 @@ public class ProyectilF : MonoBehaviour
         anim.SetBool("ParryOk", false);
     }
 }
+
     
