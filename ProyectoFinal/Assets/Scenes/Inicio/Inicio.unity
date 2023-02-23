@@ -353,13 +353,14 @@ MonoBehaviour:
   walkSpeed: 20
   sprintSpeed: 15
   swingSpeed: 30
-  groundDrag: 4
+  groundDrag: 5
+  airDrag: 4
   slideSpeed: 30
   wallrunSpeed: 10
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
-  jumpForce: 20
-  jumpDown: 3
+  jumpForce: 65
+  jumpDown: 500
   jumpCooldown: 0.25
   airMultiplier: 0.5
   crouchSpeed: 5
@@ -428,6 +429,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   lr: {fileID: 1873879040}
+  pJumpdown: 2500
   maxGrappleDistance: 50
   grappleDelayedTime: 0.25
   oveshootYAxis: 1
@@ -478,7 +480,7 @@ MonoBehaviour:
   wallJumpUpForce: 15
   wallJumpSideForce: 20
   wallClimbSpeed: 3
-  maxWallRunTime: 0.3
+  maxWallRunTime: 2
   jumpKey: 32
   upwardsRunKey: 113
   downwardsRunKey: 101
@@ -7192,7 +7194,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074587199}
-  m_LocalRotation: {x: 0.04766384, y: -0.000000017320573, z: 8.2650436e-10, w: 0.99886346}
+  m_LocalRotation: {x: 0.04766384, y: 0.000000017320575, z: -8.265045e-10, w: 0.99886346}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

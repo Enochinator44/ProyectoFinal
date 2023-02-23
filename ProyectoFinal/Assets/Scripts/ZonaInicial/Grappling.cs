@@ -12,6 +12,7 @@ public class Grappling : MonoBehaviour
     public Transform gunTip;
     public LayerMask whatIsGrappleable;
     public LineRenderer lr;
+    public float pJumpdown;
 
     [Header("Grappling")]
 
@@ -124,7 +125,7 @@ public class Grappling : MonoBehaviour
     public void StopGrapple()
     {
         prueba.SetActive(false);
-        pm.jumpDown = 3;
+        pm.jumpDown = pJumpdown;
         pm.state = Controllador2.MovementState.wallrunning;
         grapplingCdTimmer = grapplingCd;
         lr.enabled = false;

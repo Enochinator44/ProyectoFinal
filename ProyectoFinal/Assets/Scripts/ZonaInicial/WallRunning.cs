@@ -205,7 +205,7 @@ public class WallRunning : MonoBehaviour
 
     private void StopWallRun()
     {
-        pm.state = Controllador2.MovementState.air;
+        //pm.state = Controllador2.MovementState.air;
         Debug.Log("StopWallrun");
     }
 

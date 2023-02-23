@@ -13,6 +13,7 @@ public class Controllador2 : MonoBehaviour
     public float swingSpeed;
 
     public float groundDrag;
+    public float airDrag;
     public float slideSpeed;
     public float wallrunSpeed;
 
@@ -94,18 +95,30 @@ public class Controllador2 : MonoBehaviour
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+    
 
         MyInput();
         SpeedControl();
         StateHandler();
 
         // handle drag
-        if (grounded && state == MovementState.grappling)
+        if (grounded)
+        {
+            state = Controllador2.MovementState.walking;
+            Debug.Log(grounded + "suelo");
             rb.drag = groundDrag;
+        }
         else
-            rb.drag = 0;
+        {
+            state = Controllador2.MovementState.air;
+        }
 
-        
+        if ( state == MovementState.grappling|| state==MovementState.air)
+            rb.drag = airDrag;
+        else
+            rb.drag = groundDrag;
+
+
     }
 
     private void FixedUpdate()
@@ -121,6 +134,7 @@ public class Controllador2 : MonoBehaviour
         // when to jump
         if (Input.GetKey(jumpKey) && readyToJump && grounded && state != MovementState.wallrunning)
         {
+            state = Controllador2.MovementState.air;
             readyToJump = false;
 
             Jump();
@@ -198,7 +212,11 @@ public class Controllador2 : MonoBehaviour
                 desiredMoveSpeed = walkSpeed;
                 break;
             case MovementState.air:
-                rb.AddForce(-transform.up* jumpDown, ForceMode.Acceleration);
+                if (rb.velocity.y<=0)
+                {
+                    rb.AddForce(-transform.up * jumpDown * Time.deltaTime, ForceMode.Acceleration);
+                }
+          
 
                 break;
 
@@ -255,7 +273,7 @@ public class Controllador2 : MonoBehaviour
         if (state == MovementState.grappling) return;
         if (state == MovementState.swinging) return;
 
-        // calculate movement direction
+        //  direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         // on slope
