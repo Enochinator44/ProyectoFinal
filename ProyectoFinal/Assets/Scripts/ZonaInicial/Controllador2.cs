@@ -212,7 +212,7 @@ public class Controllador2 : MonoBehaviour
                 desiredMoveSpeed = walkSpeed;
                 break;
             case MovementState.air:
-                if (rb.velocity.y<=0)
+                if (rb.velocity.y<=2)
                 {
                     rb.AddForce(-transform.up * jumpDown * Time.deltaTime, ForceMode.Acceleration);
                 }

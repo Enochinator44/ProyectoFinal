@@ -13,6 +13,7 @@ public class Grappling : MonoBehaviour
     public LayerMask whatIsGrappleable;
     public LineRenderer lr;
     public float pJumpdown;
+    public float pAirDrag;
 
     [Header("Grappling")]
 
@@ -104,6 +105,7 @@ public class Grappling : MonoBehaviour
     {
         pm.state = Controllador2.MovementState.grappling;
         pm.jumpDown=0;
+        pm.airDrag = 0;
         prueba.SetActive(false);
 
 
@@ -126,6 +128,7 @@ public class Grappling : MonoBehaviour
     {
         prueba.SetActive(false);
         pm.jumpDown = pJumpdown;
+        pm.airDrag = pAirDrag;
         pm.state = Controllador2.MovementState.wallrunning;
         grapplingCdTimmer = grapplingCd;
         lr.enabled = false;
