@@ -9,23 +9,24 @@ public class P_cam_BlackHole : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        speed = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.right * Time.deltaTime*speed, Space.World);
+        transform.Translate(Vector3.right * Time.deltaTime * speed, Space.World);
     }
 
     public void begin()
     {
-        //float tiempo = 0; 
-        //while (tiempo < 5)
-        //{
-        //    tiempo += Time.deltaTime;
-        //    transform.Translate(-Vector3.right * Time.deltaTime * speed*2, Space.World);
-        //}
-        SceneManager.LoadScene("Inicio");
+        StartCoroutine(cBegin());
+        
+    }
+    IEnumerator cBegin()
+    {
+        speed = 0.25f;
+        yield return new WaitForSeconds(4);
+        //SceneManager.LoadScene("Inicio");
     }
 }
