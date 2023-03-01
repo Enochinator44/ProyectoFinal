@@ -43,7 +43,7 @@ public class VidaYdañoJugador : MonoBehaviour
             Anim.Play("Daño");
             vidaImg.fillAmount = vida / 100;
             StartCoroutine(Invulnerabilidad());
-            StartCoroutine(FrenarVelocidad());
+            //StartCoroutine(FrenarVelocidad());
         }
         
         
@@ -52,8 +52,7 @@ public class VidaYdañoJugador : MonoBehaviour
     {
         vida -= CantidadEnemigo;
         Anim.Play("Daño2");
-        StartCoroutine(Invulnerabilidad());
-        StartCoroutine(FrenarVelocidad());
+        
     }
 
     IEnumerator Invulnerabilidad()
@@ -62,14 +61,14 @@ public class VidaYdañoJugador : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         invencible = false;
     }
-    IEnumerator FrenarVelocidad()
-    {
-        var velocidadActual = GetComponent<PlayerController>().playerSpeed;
-        GetComponent<PlayerController>().playerSpeed = 0;
-        yield return new WaitForSeconds(tiempoFrenado);
-        GetComponent<PlayerController>().playerSpeed = velocidadActual;
+    //IEnumerator FrenarVelocidad()
+    //{
+    //    var velocidadActual = GetComponent<PlayerController>().playerSpeed;
+    //    GetComponent<PlayerController>().playerSpeed = 0;
+    //    yield return new WaitForSeconds(tiempoFrenado);
+    //    GetComponent<PlayerController>().playerSpeed = velocidadActual;
 
-    }
+    //}
     IEnumerator Espera()
     {
         yield return new WaitForSeconds(3);
