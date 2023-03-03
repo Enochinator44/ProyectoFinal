@@ -28,7 +28,7 @@ public class VidaYdañoJugador : MonoBehaviour
         }
         if (vida<=0)
         {
-            Anim.Play("muerte");
+            Anim.Play("Muerte");
             
             StartCoroutine(Espera());
 
@@ -72,6 +72,6 @@ public class VidaYdañoJugador : MonoBehaviour
     IEnumerator Espera()
     {
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(2);
+       
     }
 }

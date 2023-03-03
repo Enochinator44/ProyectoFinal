@@ -110,8 +110,17 @@ public class ContT : MonoBehaviour
         //playerInput = Vector3.ClampMagnitude(playerInput, 1);
         //transform.Translate(playerInput * playerSpeed * Time.unscaledDeltaTime);
 
+        if (desiredMoveDirection.magnitude>0)
+        {
+            playerAnimatorController.SetBool("run", true);
 
-        //playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * playerSpeed);
+        }
+        else
+        {
+            playerAnimatorController.SetBool("run", false);
+        }
+        
+        playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * playerSpeed);
 
         //camDirection();
 
@@ -332,9 +341,11 @@ public class ContT : MonoBehaviour
     public IEnumerator Combos()
     {
         Debug.Log("Empieza Corrutina Combos");
-       
+
         playerAnimatorController.SetBool("Ataque3", false);
         playerAnimatorController.SetBool("Ataque1", true);
+
+
         Debug.Log("Primer ataque");
 
         
@@ -376,6 +387,7 @@ public class ContT : MonoBehaviour
         TiempoCombo = 0;
         playerAnimatorController.SetBool("Ataque1", false);
         playerAnimatorController.SetBool("Ataque2", true);
+
         Debug.Log("Segundo ataque");
         bWaitForCombo = true;
         while (bWaitForCombo /*|| TiempoCombo < 1*/)
@@ -400,6 +412,7 @@ public class ContT : MonoBehaviour
         TiempoCombo = 0;
         playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque3", true);
+
         Debug.Log("Tercer ataque");
         bCombo = false;
 

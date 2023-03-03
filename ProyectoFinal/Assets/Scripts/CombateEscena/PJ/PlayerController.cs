@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
     public float fallVelocity;
     public float jumpForce;
     private bool Run;
-    private bool left;
-    private bool right;
+    ////private bool left;
+    ////private bool right;
     public bool LlavePortal1; //Esta es para el templo y hacer tp al minijuego al que hay que poner texturas y eso 
     public bool LLavePortal2; //Esta es para  que se active el tp hacia la zona elevada que recuerdo que la teneis que arreglar 
     public bool llavePortal3; //esta es para que puedas activar el portal de arriba que finalizara el juego , teneis que buscarle un sitio en el que ponerla (preferiblemente abajo )
@@ -49,8 +49,8 @@ public class PlayerController : MonoBehaviour
     float velocidadmodificada;
     private bool trepar = false;
 
-    private bool AtaqueMelee,
-    AtaqueRango;
+    //private bool AtaqueMelee,
+    //AtaqueRango;
 
     //Variables Animacion
 
@@ -134,26 +134,24 @@ public class PlayerController : MonoBehaviour
         if (player.isGrounded && Input.GetKeyDown(KeyCode.Alpha1))
         {
             Filo.SetActive(true);
-            AtaqueMelee = true;
-            AtaqueRango = false;
+         
         }
         if (player.isGrounded && Input.GetKeyDown(KeyCode.Alpha2))
         {
             Filo.SetActive(false);
-            AtaqueMelee = false;
-            AtaqueRango = true;
+            
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Run = true;
             velocidadmodificada =3f;
-            playerAnimatorController.SetBool("PlayerRun",Run);
+            //playerAnimatorController.SetBool("PlayerRun",Run);
           
         }
         else
         {
             Run = false;
-            playerAnimatorController.SetBool("PlayerRun", Run);
+            //playerAnimatorController.SetBool("PlayerRun", Run);
             velocidadmodificada = 1;
         }
         if (Input.GetKey(KeyCode.LeftControl))
@@ -164,10 +162,7 @@ public class PlayerController : MonoBehaviour
         {
             velocidadmodificada = 1;
         }
-        /*if(Input.GetKeyDown(KeyCode.Space) && trepar == true)
-        {
-            Animacion;
-        }*/
+      
 
 
 
