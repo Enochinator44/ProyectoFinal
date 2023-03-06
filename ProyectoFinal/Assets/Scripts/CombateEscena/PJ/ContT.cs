@@ -91,7 +91,7 @@ public class ContT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         
         horizontalMove = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");
@@ -106,7 +106,7 @@ public class ContT : MonoBehaviour
         right.Normalize();
         desiredMoveDirection = forward * verticalMove + right * horizontalMove;
         transform.Translate(desiredMoveDirection * playerSpeed * Time.deltaTime, Space.World);
-        transform.LookAt(desiredMoveDirection);
+        transform.LookAt(transform.forward);
         //playerInput = new Vector3(horizontalMove, 0, verticalMove);
         //playerInput = Vector3.ClampMagnitude(playerInput, 1);
         //transform.Translate(playerInput * playerSpeed * Time.unscaledDeltaTime);
