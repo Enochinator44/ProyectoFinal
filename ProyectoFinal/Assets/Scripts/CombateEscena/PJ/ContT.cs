@@ -92,7 +92,7 @@ public class ContT : MonoBehaviour
     void Update()
     {
 
-        transform.LookAt(enemigo.transform);
+        
         horizontalMove = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");
 
@@ -106,10 +106,11 @@ public class ContT : MonoBehaviour
         right.Normalize();
         desiredMoveDirection = forward * verticalMove + right * horizontalMove;
         transform.Translate(desiredMoveDirection * playerSpeed * Time.deltaTime, Space.World);
+        transform.LookAt(desiredMoveDirection);
         //playerInput = new Vector3(horizontalMove, 0, verticalMove);
         //playerInput = Vector3.ClampMagnitude(playerInput, 1);
         //transform.Translate(playerInput * playerSpeed * Time.unscaledDeltaTime);
-
+        
         if (desiredMoveDirection.magnitude>0)
         {
             playerAnimatorController.SetBool("run", true);
@@ -324,6 +325,7 @@ public class ContT : MonoBehaviour
     {
 
         player.enabled = false;
+        playerAnimatorController.SetTrigger("Dash");
 
         while (dashtime > 0)
         {
@@ -343,7 +345,9 @@ public class ContT : MonoBehaviour
         Debug.Log("Empieza Corrutina Combos");
 
         playerAnimatorController.SetBool("Ataque3", false);
+        playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque1", true);
+        
 
 
         Debug.Log("Primer ataque");
@@ -387,6 +391,8 @@ public class ContT : MonoBehaviour
         TiempoCombo = 0;
         playerAnimatorController.SetBool("Ataque1", false);
         playerAnimatorController.SetBool("Ataque2", true);
+        //playerAnimatorController.SetBool("Ataque3", false);
+
 
         Debug.Log("Segundo ataque");
         bWaitForCombo = true;
@@ -412,7 +418,8 @@ public class ContT : MonoBehaviour
         TiempoCombo = 0;
         playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque3", true);
-
+        playerAnimatorController.SetBool("Ataque1", false);
+        
         Debug.Log("Tercer ataque");
         bCombo = false;
 

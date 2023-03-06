@@ -11704,7 +11704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRB: {fileID: 0}
   playerSpeed: 20
-  dashCool: 0
+  dashCool: 0.5
   gravity: 9.8
   fallVelocity: 0
   jumpForce: 10
