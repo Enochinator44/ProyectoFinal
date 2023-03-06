@@ -113,7 +113,7 @@ public class ContT : MonoBehaviour
         if (desiredMoveDirection.magnitude>0)
         {
             playerAnimatorController.SetBool("run", true);
-
+            Debug.Log("Entra en el if");
         }
         else
         {
