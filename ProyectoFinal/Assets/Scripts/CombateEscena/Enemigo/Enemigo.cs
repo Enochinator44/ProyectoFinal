@@ -21,7 +21,7 @@ public class Enemigo : MonoBehaviour
     void Start()
     {
         fase = 1;
-        vProvisional = 1000;
+        
     }
 
     // Update is called once per frame
@@ -36,25 +36,26 @@ public class Enemigo : MonoBehaviour
             vProvisional = 1000;
         }
         timing2 += Time.deltaTime;
+        if (timing2 >= 15)
+        {
+            exclusivo = Random.Range(0, 6);
+            while (exclusivo == ciclo2)
+            {
+                exclusivo = Random.Range(1, 7);
+            }
+
+            if (ciclo2 != exclusivo)
+            {
+                ciclo2 = exclusivo;
+                estado = ciclo2;
+                agente.SetDestination(movEnem[ciclo2].transform.position);
+
+            }
+            timing2 = 0;
+        }
         if (fase == 1)
         {
-            if (timing2 >= 15)
-            {
-                exclusivo = Random.Range(0, 6);
-                while (exclusivo == ciclo2)
-                {
-                    exclusivo = Random.Range(1, 7);
-                }
-
-                if (ciclo2 != exclusivo)
-                {
-                    ciclo2 = exclusivo;
-                    estado = ciclo2;
-                    agente.SetDestination(movEnem[ciclo2].transform.position);
-
-                }
-                timing2 = 0;
-            }
+            
 
 
 
@@ -92,23 +93,7 @@ public class Enemigo : MonoBehaviour
         }
         if (fase == 2)
         {
-            if (timing2 >= 5)
-            {
-                exclusivo = Random.Range(1, 7);
-                while (exclusivo == ciclo2)
-                {
-                    exclusivo = Random.Range(1, 7);
-                }
 
-                if (ciclo2 != exclusivo)
-                {
-                    ciclo2 = exclusivo;
-                    estado = ciclo2;
-                    agente.SetDestination(movEnem[ciclo2].transform.position);
-
-                }
-                timing2 = 0;
-            }
 
 
 
