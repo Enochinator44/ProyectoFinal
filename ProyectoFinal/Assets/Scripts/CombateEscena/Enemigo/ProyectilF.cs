@@ -9,10 +9,11 @@ public class ProyectilF : MonoBehaviour
     public Animator anim;
     bool inicio, parried = false;
     Vector3 pos, axis;
-    public GameObject gm, enemy, player;
+    public GameObject gm, enemy, player, prefab;
     float count;
     Rigidbody rb;
     public int daño;
+    public float angle, time;
 
 
     public int tipo;
@@ -22,9 +23,11 @@ public class ProyectilF : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         gm = GameObject.Find("gamemanager");
         enemy = GameObject.Find("Enemy");
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Anim_Char_CombatIdle");
         axis = transform.right;
         pos = transform.position;
+        
+
     }
 
     // Update is called once per frame
@@ -52,12 +55,18 @@ public class ProyectilF : MonoBehaviour
                     }
                     break;
                 case 3:
-                    transform.RotateAround(enemy.transform.position, Vector3.up, speed[tipo-1]*Time.deltaTime*35);
+                if (inicio == false)
+                {
+                    transform.Rotate(0, angle, 0);
+                    inicio = true;
+                    transform.localScale += new Vector3(2, 2, 2);
+                }
+                transform.RotateAround(enemy.transform.position, Vector3.up, speed[tipo-1]*Time.deltaTime*35);
                     transform.Translate(new Vector3(speed[tipo - 1] * Time.deltaTime, 0, speed[tipo - 1] * Time.deltaTime), Space.Self);
                     break;
                 case 4:
                 
-                pos += -Vector3.forward * Time.deltaTime * speed[tipo-1];
+                pos += transform.forward * Time.deltaTime * speed[tipo-1];
                 transform.position = pos + axis * Mathf.Sin(Time.time * 5f) * 10f;
                 
                 break;
@@ -67,6 +76,27 @@ public class ProyectilF : MonoBehaviour
                         inicio = true;
                         rb.AddForce(transform.forward * speed[tipo - 1]);
                     }
+                break;
+                case 6:
+                if (inicio == false)
+                {
+                    inicio = true;
+                    rb.AddForce(transform.forward * speed[tipo - 1]);
+                }
+                time += Time.deltaTime;
+                if (time > 3)
+                {
+                    GameObject ProyectilActual = Instantiate(prefab, transform.position, Quaternion.Euler(new Vector3(0,0,0)));
+                    ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
+                    ProyectilActual = Instantiate(prefab, transform.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                    ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
+                    ProyectilActual = Instantiate(prefab, transform.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                    ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
+                    ProyectilActual = Instantiate(prefab, transform.position, Quaternion.Euler(new Vector3(0, 270, 0)));
+                    ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
+                    Destroy(gameObject);
+                }
+
                 break;
             }
 

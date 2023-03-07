@@ -40,11 +40,11 @@ public class ControlEscenaMenu : MonoBehaviour
     }
     public void NewGame()
     {
-        Debug.Log("NewGame");
+        SceneManager.LoadScene("Inicio");
     }
     public void LoadGame()
     {
-        Debug.Log("LoadGame");
+        SceneManager.LoadScene("Fight");
     }
     public void OptionsButton()
     {
