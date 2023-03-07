@@ -25,12 +25,12 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Heat
   m_Shader: {fileID: -6465566751694194690, guid: f0eb646dbb3276b41b0e5fa64994d8e9, type: 3}
-  m_ValidKeywords:
-  - _ENABLE_FOG_ON_TRANSPARENT
-  - _SURFACE_TYPE_TRANSPARENT
+  m_ValidKeywords: []
   m_InvalidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _DOUBLESIDED_ON
+  - _ENABLE_FOG_ON_TRANSPARENT
+  - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

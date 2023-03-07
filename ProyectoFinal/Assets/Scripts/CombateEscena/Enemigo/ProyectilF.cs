@@ -13,6 +13,7 @@ public class ProyectilF : MonoBehaviour
     float count;
     Rigidbody rb;
     public int daño;
+    public float angle;
 
 
     public int tipo;
@@ -25,6 +26,8 @@ public class ProyectilF : MonoBehaviour
         player = GameObject.Find("Player");
         axis = transform.right;
         pos = transform.position;
+        
+
     }
 
     // Update is called once per frame
@@ -52,7 +55,13 @@ public class ProyectilF : MonoBehaviour
                     }
                     break;
                 case 3:
-                    transform.RotateAround(enemy.transform.position, Vector3.up, speed[tipo-1]*Time.deltaTime*35);
+                if (inicio == false)
+                {
+                    transform.Rotate(0, angle, 0);
+                    inicio = true;
+                    transform.localScale += new Vector3(2, 2, 2);
+                }
+                transform.RotateAround(enemy.transform.position, Vector3.up, speed[tipo-1]*Time.deltaTime*35);
                     transform.Translate(new Vector3(speed[tipo - 1] * Time.deltaTime, 0, speed[tipo - 1] * Time.deltaTime), Space.Self);
                     break;
                 case 4:
