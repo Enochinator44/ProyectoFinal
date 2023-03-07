@@ -10,7 +10,7 @@ public class Enemigo : MonoBehaviour
     public float speedEnem, timing,  timing2;
     public GameObject[] movEnem, ProyectilF;
     public NavMeshAgent agente;
-    public int ciclo2, ciclo, exclusivo;
+    public int ciclo2, ciclo, exclusivo, fase;
     public float vProvisional, estado;
     Coroutine cProyectil1;
     public float[] min, max;
@@ -20,69 +20,136 @@ public class Enemigo : MonoBehaviour
     
     void Start()
     {
+        fase = 1;
         vProvisional = 1000;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         transform.LookAt(Player.transform);
-
-        timing2 += Time.deltaTime;
-
-        if (timing2 >=15)
+        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, transform.eulerAngles.z);
+        if (fase == 1 && vProvisional <=0)
         {
-            exclusivo = Random.Range(0, 6);
-            while (exclusivo == ciclo2)
+            fase++;
+            vProvisional = 1000;
+        }
+        timing2 += Time.deltaTime;
+        if (fase == 1)
+        {
+            if (timing2 >= 15)
             {
                 exclusivo = Random.Range(0, 6);
-            }
-            
-            if (ciclo2 != exclusivo)
-            {
-                ciclo2 = exclusivo;
-                estado = ciclo2;
-                agente.SetDestination(movEnem[ciclo2].transform.position);
-
-            }
-            timing2 = 0;
-        }
-       
-
-        
-        if (timing > 4)
-        {
-            //exclusivo = Random.Range(1,5);
-            exclusivo = 6;
-            if (ciclo != exclusivo)
-            {
-                ciclo = exclusivo;
-                switch (ciclo)
+                while (exclusivo == ciclo2)
                 {
-                    case 1:
-                        StartCoroutine("Proyectil1");
-                        break;
-                    case 2:
-                        StartCoroutine("Proyectil2");
-                        break;
-                    case 3:
-                        StartCoroutine("Proyectil3");
-                        break;
-                    case 4:
-                        StartCoroutine("Proyectil4");
-                        break;
-                    case 5:
-                        StartCoroutine("Proyectil5");
-                        break;
-                    case 6:
-                        StartCoroutine("Zones");
-                        break;
+                    exclusivo = Random.Range(1, 7);
                 }
+
+                if (ciclo2 != exclusivo)
+                {
+                    ciclo2 = exclusivo;
+                    estado = ciclo2;
+                    agente.SetDestination(movEnem[ciclo2].transform.position);
+
+                }
+                timing2 = 0;
             }
-            
-            
-            timing = 0;
+
+
+
+            if (timing > 3)
+            {
+                exclusivo = Random.Range(1, 5);
+
+                if (ciclo != exclusivo)
+                {
+                    ciclo = exclusivo;
+                    switch (ciclo)
+                    {
+                        case 1:
+                            StartCoroutine("Proyectil1");
+                            break;
+                        case 2:
+                            StartCoroutine("Proyectil2");
+                            break;
+                        case 3:
+                            StartCoroutine("Proyectil3");
+                            break;
+                        case 4:
+                            StartCoroutine("Proyectil4");
+                            break;
+                        case 5:
+                            StartCoroutine("Proyectil5");
+                            break;
+                        
+                    }
+                }
+
+
+                timing = 0;
+            }
         }
+        if (fase == 2)
+        {
+            if (timing2 >= 5)
+            {
+                exclusivo = Random.Range(1, 7);
+                while (exclusivo == ciclo2)
+                {
+                    exclusivo = Random.Range(1, 7);
+                }
+
+                if (ciclo2 != exclusivo)
+                {
+                    ciclo2 = exclusivo;
+                    estado = ciclo2;
+                    agente.SetDestination(movEnem[ciclo2].transform.position);
+
+                }
+                timing2 = 0;
+            }
+
+
+
+            if (timing > 3)
+            {
+                exclusivo = Random.Range(1, 7);
+
+                if (ciclo != exclusivo)
+                {
+                    ciclo = exclusivo;
+                    switch (ciclo)
+                    {
+                        case 1:
+                            StartCoroutine("Proyectil1");
+                            break;
+                        case 2:
+                            StartCoroutine("Proyectil2");
+                            break;
+                        case 3:
+                            StartCoroutine("Proyectil3");
+                            break;
+                        case 4:
+                            StartCoroutine("Proyectil4");
+                            break;
+                        case 5:
+                            StartCoroutine("Proyectil5");
+                            break;
+                        case 6:
+                            StartCoroutine("Zones");
+                            break;
+                        case 7:
+                            StartCoroutine("Proyectil7");
+                            break;
+                    }
+                }
+
+
+                timing = 0;
+            }
+        }
+
 
         timing += Time.deltaTime;
        
@@ -99,6 +166,14 @@ public class Enemigo : MonoBehaviour
     private IEnumerator Proyectil2()
     {
         ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation);
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 2;
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation*Quaternion.Euler(new Vector3(0, 70,0)));
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 2;
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation * Quaternion.Euler(new Vector3(0, -70, 0)));
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 2;
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation * Quaternion.Euler(new Vector3(0, 35, 0)));
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 2;
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation * Quaternion.Euler(new Vector3(0, -35, 0)));
         ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 2;
 
         yield return null;
@@ -121,6 +196,10 @@ public class Enemigo : MonoBehaviour
     {
         ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation);
         ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 4;
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation * Quaternion.Euler(new Vector3(0, 70, 0)));
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 4;
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation * Quaternion.Euler(new Vector3(0, -70, 0)));
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 4;
 
         yield return null;
     }
@@ -140,6 +219,12 @@ public class Enemigo : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         
+        yield return null;
+    }
+    private IEnumerator Proyectil7()
+    {
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation);
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 6;
         yield return null;
     }
 }

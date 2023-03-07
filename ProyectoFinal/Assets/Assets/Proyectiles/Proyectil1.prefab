@@ -118,11 +118,15 @@ MonoBehaviour:
   - 5
   - 10
   - 1000
+  - 800
   anim: {fileID: 8697363484611887107}
   gm: {fileID: 0}
   enemy: {fileID: 0}
   player: {fileID: 0}
+  prefab: {fileID: 4615990017652130513}
   "da\xF1o": 15
+  angle: 0
+  time: 0
   tipo: 0
 --- !u!95 &8697363484611887107
 Animator:
