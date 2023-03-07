@@ -91,8 +91,8 @@ public class ContT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        transform.LookAt(enemigo.transform);
+        
+        
         horizontalMove = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");
 
@@ -106,12 +106,22 @@ public class ContT : MonoBehaviour
         right.Normalize();
         desiredMoveDirection = forward * verticalMove + right * horizontalMove;
         transform.Translate(desiredMoveDirection * playerSpeed * Time.deltaTime, Space.World);
+        transform.LookAt(transform.forward);
         //playerInput = new Vector3(horizontalMove, 0, verticalMove);
         //playerInput = Vector3.ClampMagnitude(playerInput, 1);
         //transform.Translate(playerInput * playerSpeed * Time.unscaledDeltaTime);
-
-
-        //playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * playerSpeed);
+        
+        if (desiredMoveDirection.magnitude>0)
+        {
+            playerAnimatorController.SetBool("run", true);
+            Debug.Log("Entra en el if");
+        }
+        else
+        {
+            playerAnimatorController.SetBool("run", false);
+        }
+        
+        playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * playerSpeed);
 
         //camDirection();
 
@@ -315,6 +325,7 @@ public class ContT : MonoBehaviour
     {
 
         player.enabled = false;
+        playerAnimatorController.SetTrigger("Dash");
 
         while (dashtime > 0)
         {
@@ -332,9 +343,13 @@ public class ContT : MonoBehaviour
     public IEnumerator Combos()
     {
         Debug.Log("Empieza Corrutina Combos");
-       
+
         playerAnimatorController.SetBool("Ataque3", false);
+        playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque1", true);
+        
+
+
         Debug.Log("Primer ataque");
 
         
@@ -376,6 +391,9 @@ public class ContT : MonoBehaviour
         TiempoCombo = 0;
         playerAnimatorController.SetBool("Ataque1", false);
         playerAnimatorController.SetBool("Ataque2", true);
+        //playerAnimatorController.SetBool("Ataque3", false);
+
+
         Debug.Log("Segundo ataque");
         bWaitForCombo = true;
         while (bWaitForCombo /*|| TiempoCombo < 1*/)
@@ -400,6 +418,8 @@ public class ContT : MonoBehaviour
         TiempoCombo = 0;
         playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque3", true);
+        playerAnimatorController.SetBool("Ataque1", false);
+        
         Debug.Log("Tercer ataque");
         bCombo = false;
 
