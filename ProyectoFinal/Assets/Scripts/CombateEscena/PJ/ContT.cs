@@ -383,6 +383,11 @@ public class ContT : MonoBehaviour
                 bCombo = false;
                 TiempoCombo = 0;
             }
+
+            if (playerAnimatorController.GetCurrentAnimatorStateInfo(0).IsName("A1"))
+            {
+                playerAnimatorController.SetBool("Ataque1", false);
+            }
             
            
            
@@ -412,7 +417,8 @@ public class ContT : MonoBehaviour
                 TiempoCombo = 0;
             }
             
-           
+
+
             yield return null;
         }
         TiempoCombo = 0;
