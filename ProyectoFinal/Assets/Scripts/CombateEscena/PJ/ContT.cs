@@ -106,7 +106,7 @@ public class ContT : MonoBehaviour
         right.Normalize();
         desiredMoveDirection = forward * verticalMove + right * horizontalMove;
         transform.Translate(desiredMoveDirection * playerSpeed * Time.deltaTime, Space.World);
-        transform.LookAt(transform.forward);
+        transform.LookAt(desiredMoveDirection);
         //playerInput = new Vector3(horizontalMove, 0, verticalMove);
         //playerInput = Vector3.ClampMagnitude(playerInput, 1);
         //transform.Translate(playerInput * playerSpeed * Time.unscaledDeltaTime);
