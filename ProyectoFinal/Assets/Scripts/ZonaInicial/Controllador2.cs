@@ -23,6 +23,8 @@ public class Controllador2 : MonoBehaviour
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
 
+   
+
 
     [Header("Jumping")]
     public float jumpForce;
@@ -95,6 +97,7 @@ public class Controllador2 : MonoBehaviour
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+       
     
 
         MyInput();
