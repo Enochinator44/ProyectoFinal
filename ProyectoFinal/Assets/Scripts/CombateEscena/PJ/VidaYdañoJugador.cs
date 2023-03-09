@@ -28,6 +28,11 @@ public class VidaYdañoJugador : MonoBehaviour
         }
         if (vida<=0)
         {
+            GetComponent<ContT>().playerSpeed = 0;
+            GetComponent<ContT>().dashSpeed = 0;
+            GetComponent<ContT>().parry.SetActive(false);
+            GetComponent<ContT>().escudo.SetActive(false);
+            GetComponent<ContT>().bAtaqueCargado=false;
             Anim.Play("Muerte");
             
             StartCoroutine(Espera());

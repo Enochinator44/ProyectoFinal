@@ -5,6 +5,7 @@ using UnityEngine;
 public class HacerParry : MonoBehaviour
 {
     // Start is called before the first frame update
+    public GameObject player;
     void Start()
     {
         
@@ -20,6 +21,7 @@ public class HacerParry : MonoBehaviour
         if (other.tag == "ParryOk")
         {
             Debug.Log("def");
+            player.GetComponent<Animator>().SetTrigger("Parry");
             other.GetComponent<Rigidbody>().velocity = -other.GetComponent<Rigidbody>().velocity*2;
         }
 
