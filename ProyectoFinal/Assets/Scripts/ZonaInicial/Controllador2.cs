@@ -23,8 +23,11 @@ public class Controllador2 : MonoBehaviour
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
 
-   
 
+    [Header("Animations")]
+    public Animator anim;
+    private float verticalVelocity;
+    private float horizontalVelocity;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -95,10 +98,15 @@ public class Controllador2 : MonoBehaviour
 
     private void Update()
     {
+        //verticalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude;
+        //horizontalVelocity = new Vector3(0, rb.velocity.y, 0).magnitude;
+
+        //Debug.Log("Verical" + verticalVelocity + "Horizontal" + horizontalVelocity);
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-       
-    
+        //Debug.Log(horizontalInput + "horizontalInput");
+        //Debug.Log(verticalInput+"VerticalInput");
+
 
         MyInput();
         SpeedControl();
@@ -122,6 +130,7 @@ public class Controllador2 : MonoBehaviour
             rb.drag = groundDrag;
 
 
+
     }
 
     private void FixedUpdate()
@@ -133,10 +142,11 @@ public class Controllador2 : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-
+        
         // when to jump
         if (Input.GetKey(jumpKey) && readyToJump && grounded && state != MovementState.wallrunning)
         {
+            anim.SetTrigger("Jump");
             state = Controllador2.MovementState.air;
             readyToJump = false;
 
@@ -283,10 +293,12 @@ public class Controllador2 : MonoBehaviour
         if (OnSlope() && !exitingSlope)
         {
             rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
-
+           
             if (rb.velocity.y > 0)
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
+
+      
 
         // on ground
         else if (grounded)
@@ -294,6 +306,7 @@ public class Controllador2 : MonoBehaviour
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
             state = MovementState.walking;
             rb.mass = 1.25f;
+            
            
         }
             
@@ -348,7 +361,7 @@ public class Controllador2 : MonoBehaviour
 
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
+        //anim.SetTrigger("Jump");
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
     private void ResetJump()
