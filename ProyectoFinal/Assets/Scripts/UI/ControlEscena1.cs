@@ -14,7 +14,7 @@ public class ControlEscena1 : MonoBehaviour
     public TextMeshProUGUI carga;
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.None;
         continuar.CrossFadeAlpha(1f, 2f, false);
         fondoContinuar.CrossFadeAlpha(1, 2f, false);
         titulo.CrossFadeAlpha(1, 2f, false);

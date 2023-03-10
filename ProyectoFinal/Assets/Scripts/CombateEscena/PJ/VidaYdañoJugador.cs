@@ -38,6 +38,7 @@ public class VidaYdañoJugador : MonoBehaviour
             StartCoroutine(Espera());
 
             vidaImg.fillAmount = vida / 100;
+            
         }
     }
     public void RestarVida(float Cantidad)
@@ -76,7 +77,9 @@ public class VidaYdañoJugador : MonoBehaviour
     //}
     IEnumerator Espera()
     {
+        gameObject.GetComponent<ContT>().enabled = false;
         yield return new WaitForSeconds(3);
-       
+        gameObject.GetComponent<ContT>().enabled = true;
+        SceneManager.LoadScene("Menu");
     }
 }
