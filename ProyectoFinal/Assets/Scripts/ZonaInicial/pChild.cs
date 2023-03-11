@@ -5,18 +5,21 @@ using UnityEngine;
 public class pChild : MonoBehaviour
 {
     public GameObject player;
-    private  Platform plt;
-    public GameObject movPlat;
+    
+    
 
     public void Start()
     {
-        plt = movPlat.GetComponent<Platform>();
+        
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        player.transform.parent = transform;
-        Debug.Log("Child de"+transform.name);
+        if (other.CompareTag("Player")){
+            player.transform.parent = transform;
+            
+        }
+        
         //if (transform.tag=="DestroyPlatform")
         //{
         //    StartCoroutine( plt.DestroyPlatform());
@@ -24,6 +27,10 @@ public class pChild : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        player.transform.parent = null;
+        if (other.CompareTag("Player"))
+        {
+            player.transform.parent = null;
+
+        }
     }
 }
