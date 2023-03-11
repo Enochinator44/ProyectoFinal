@@ -16,6 +16,7 @@ public class pChild : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         player.transform.parent = transform;
+        Debug.Log("Child de"+transform.name);
         //if (transform.tag=="DestroyPlatform")
         //{
         //    StartCoroutine( plt.DestroyPlatform());
