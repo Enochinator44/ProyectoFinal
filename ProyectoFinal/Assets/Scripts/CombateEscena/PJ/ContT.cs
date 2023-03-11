@@ -20,7 +20,7 @@ public class ContT : MonoBehaviour
     public float dashtime=0.5f;
     public float dashSpeed=5;
     public TimeManager timeManager;
-
+    public float rotationSpeed;
     public Camera cameraShake;
   
 
@@ -106,6 +106,11 @@ public class ContT : MonoBehaviour
         right.Normalize();
         desiredMoveDirection = forward * verticalMove + right * horizontalMove;
         transform.Translate(desiredMoveDirection * playerSpeed * Time.deltaTime, Space.World);
+        if (desiredMoveDirection != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(desiredMoveDirection,Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed + Time.deltaTime);
+        }
         
         //playerInput = new Vector3(horizontalMove, 0, verticalMove);
         //playerInput = Vector3.ClampMagnitude(playerInput, 1);
@@ -427,6 +432,7 @@ public class ContT : MonoBehaviour
         playerAnimatorController.SetBool("Ataque1", false);
         
         Debug.Log("Tercer ataque");
+        
         bCombo = false;
 
     }
