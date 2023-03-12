@@ -8,6 +8,7 @@ TagManager:
   - ParryOk
   - Enemy
   - DestroyPlatform
+  - Trigger
   layers:
   - Default
   - TransparentFX
