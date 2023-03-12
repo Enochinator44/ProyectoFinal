@@ -74,7 +74,7 @@ MonoBehaviour:
     m_Value: 276.53
   scatter:
     m_OverrideState: 1
-    m_Value: 0.7
+    m_Value: 0.909
   clamp:
     m_OverrideState: 1
     m_Value: 65472
@@ -107,14 +107,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   mode:
-    m_OverrideState: 1
-    m_Value: 0
+    m_OverrideState: 0
+    m_Value: 1
   gaussianStart:
     m_OverrideState: 0
-    m_Value: 10
+    m_Value: 30
   gaussianEnd:
     m_OverrideState: 0
-    m_Value: 30
+    m_Value: 300
   gaussianMaxRadius:
     m_OverrideState: 0
     m_Value: 1
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: Global Volume Profile
+  m_Name: VolumenFight 1
   m_EditorClassIdentifier: 
   components:
   - {fileID: 8588684255992827431}
