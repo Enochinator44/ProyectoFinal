@@ -65,7 +65,8 @@ public class WallRunning : MonoBehaviour
     {
         wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallhit, wallCheckDistance, whatIsWall);
         wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallhit, wallCheckDistance, whatIsWall);
-
+        
+        
         if (wallRight==false&&wallLeft==false)
         {
             StopWallRun();
@@ -115,6 +116,7 @@ public class WallRunning : MonoBehaviour
 
                 
                 Debug.Log("empieza el wallrun");
+                pm.anim.SetBool("Wallrun", true);
                 StartWallRun();
                 //if (wallRunTimer>0)
                 //{
@@ -166,6 +168,7 @@ public class WallRunning : MonoBehaviour
 
     private void StartWallRun()
     {
+        pm.anim.SetBool("WallRun", true);
         pm.state = Controllador2.MovementState.wallrunning;
         StartCoroutine(WallRunTime());
         //wallRunTimer = maxWallRunTime;
@@ -173,6 +176,7 @@ public class WallRunning : MonoBehaviour
 
     private void WallRunningMovement()
     {
+        
         rb.useGravity = false;
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
@@ -206,11 +210,13 @@ public class WallRunning : MonoBehaviour
     private void StopWallRun()
     {
         //pm.state = Controllador2.MovementState.air;
+        pm.anim.SetBool("Wallrun", false);
         Debug.Log("StopWallrun");
     }
 
     private void WallJump()
     {
+        pm.anim.SetTrigger("Jump");
         //StopWallRun();
         //exitWallTimer = exitWallTime;
         Vector3 wallnormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
@@ -225,13 +231,14 @@ public class WallRunning : MonoBehaviour
     }
     private IEnumerator AfterJump()
     {
+        pm.anim.SetBool("Wallrun", false);
         yield return new WaitForSeconds(0.5f);
         exitingWall = false;
     }
 
     private IEnumerator WallRunTime()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         StopWallRun();
     }
 

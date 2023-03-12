@@ -69,6 +69,7 @@ public class Grappling : MonoBehaviour
 
     private void StartGrapple()
     {
+        
         if (grapplingCdTimmer>0)
         {
             return;
@@ -103,6 +104,7 @@ public class Grappling : MonoBehaviour
 
     private void ExecuteGrapple()
     {
+        pm.anim.SetTrigger("Grapple");
         pm.state = Controllador2.MovementState.grappling;
         pm.jumpDown=0;
         pm.airDrag = 0;
@@ -137,7 +139,7 @@ public class Grappling : MonoBehaviour
     private void CheckGrapple()
     {
         
-        Physics.Raycast(cam.transform.position, cam.transform.forward, 50f, whatIsGrappleable);
+        Physics.Raycast(cam.transform.position, cam.transform.forward, 60f, whatIsGrappleable);
 
         
         //prueba.SetActive(true);
