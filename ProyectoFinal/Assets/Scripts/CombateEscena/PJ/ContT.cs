@@ -7,7 +7,7 @@ public class ContT : MonoBehaviour
 {
     private float horizontalMove;
     private float verticalMove;
-
+    public GameObject collider1, collider2;
     public Rigidbody playerRB;
     public float playerSpeed, dashCool;
     private Vector3 movPlayer;
@@ -120,7 +120,7 @@ public class ContT : MonoBehaviour
         if (desiredMoveDirection.magnitude>0)
         {
             playerAnimatorController.SetBool("run", true);
-            Debug.Log("Entra en el if");
+            //Debug.Log("Entra en el if");
         }
         else
         {
@@ -351,15 +351,15 @@ public class ContT : MonoBehaviour
    
     public IEnumerator Combos()
     {
-        Debug.Log("Empieza Corrutina Combos");
+        //Debug.Log("Empieza Corrutina Combos");
 
         playerAnimatorController.SetBool("Ataque3", false);
         playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque1", true);
-        
+        collider1.GetComponent<BoxCollider>().enabled = true;
 
 
-        Debug.Log("Primer ataque");
+        //Debug.Log("Primer ataque");
 
         
         bWaitForCombo = true;
@@ -380,14 +380,16 @@ public class ContT : MonoBehaviour
             TiempoCombo += Time.deltaTime;
             if (TiempoCombo > 2)
             {
-                Debug.Log("saleAtaque2");
+                //Debug.Log("saleAtaque2");
+                
                 CancelarCombo();
                 yield break;
                 
             }
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                Debug.Log("atque2");
+                //Debug.Log("atque2");
+                
                 bWaitForCombo = false;
                 bCombo = false;
                 TiempoCombo = 0;
@@ -403,8 +405,10 @@ public class ContT : MonoBehaviour
             yield return null;
         }
         TiempoCombo = 0;
+        collider1.GetComponent<BoxCollider>().enabled = false;
         playerAnimatorController.SetBool("Ataque1", false);
         playerAnimatorController.SetBool("Ataque2", true);
+        collider2.GetComponent<BoxCollider>().enabled = true;
         //playerAnimatorController.SetBool("Ataque3", false);
 
 
@@ -415,13 +419,13 @@ public class ContT : MonoBehaviour
             TiempoCombo += Time.deltaTime;
             if (TiempoCombo > 2)
             {
-                Debug.Log("saleAtaque3");
+                //Debug.Log("saleAtaque3");
                 CancelarCombo();
                 yield break;
             }
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                Debug.Log("atque3");
+                //Debug.Log("atque3");
                 bWaitForCombo = false;
                 TiempoCombo = 0;
             }
@@ -431,14 +435,16 @@ public class ContT : MonoBehaviour
             yield return null;
         }
         TiempoCombo = 0;
+        collider2.GetComponent<BoxCollider>().enabled = false;
         playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque3", true);
         playerAnimatorController.SetBool("Ataque1", false);
-        
-        Debug.Log("Tercer ataque");
+        collider1.GetComponent<BoxCollider>().enabled = true;
+        //Debug.Log("Tercer ataque");
         
         bCombo = false;
-
+        yield return new WaitForSeconds(1);
+        collider1.GetComponent<BoxCollider>().enabled = false;
     }
    
     IEnumerator TiempoParry()
@@ -469,7 +475,7 @@ public class ContT : MonoBehaviour
             tAtaqueCargado += Time.deltaTime;
             //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * (30000 * tAtaqueCargado), Color.yellow, 0);
             Debug.DrawRay(transform.position, transform.forward * 2 * tAtaqueCargado, Color.yellow, 0);
-            Debug.Log("Cargando Ataque");
+            //Debug.Log("Cargando Ataque");
 
         }
         else if (Input.GetKeyUp(KeyCode.F) && tAtaqueCargado >= 3f)
@@ -477,7 +483,7 @@ public class ContT : MonoBehaviour
             RaycastHit hit;
             Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 100 * tAtaqueCargado);
 
-            Debug.Log("AtaqueCargado");
+            //Debug.Log("AtaqueCargado");
             
 
             bAtaqueCargado = false;
@@ -505,7 +511,7 @@ public class ContT : MonoBehaviour
         //Cancelar El daño cuando el sistema de vida Este programado
         escudo.SetActive(true);
         yield return new WaitForSeconds(1.3f);
-        Debug.Log("Escudook");
+        //Debug.Log("Escudook");
         escudo.SetActive(false);
     }
 

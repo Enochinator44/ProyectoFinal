@@ -219,10 +219,12 @@ public class Controllador2 : MonoBehaviour
 
             case MovementState.sprinting:
                 desiredMoveSpeed = sprintSpeed;
+                anim.SetBool("run", true);
                 break;
 
             case MovementState.walking:
                 desiredMoveSpeed = walkSpeed;
+                anim.SetBool("run", true);
                 break;
             case MovementState.air:
                 if (rb.velocity.y<=2)

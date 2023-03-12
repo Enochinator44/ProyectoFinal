@@ -138,7 +138,7 @@ public class ProyectilF : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
 
-        Debug.Log("colision");
+        //Debug.Log("colision");
         if (collision.gameObject.tag == "Wall")
         {
             Debug.Log("colision2");
