@@ -446,7 +446,14 @@ public class Controllador2 : MonoBehaviour
         rb.AddForce(-transform.up * jumpDown, ForceMode.Acceleration);
 
     }
-    
-   
-       
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Trigger"))
+        {
+            other.GetComponent<Cams>().activateAnim();
+        }
+    }
+
+
 }
