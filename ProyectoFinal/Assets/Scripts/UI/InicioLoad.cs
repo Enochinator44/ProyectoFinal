@@ -11,11 +11,12 @@ public class InicioLoad : MonoBehaviour
 {
     // Start is called before the first frame update
     public Image cortinilla;
-    public TextMeshProUGUI carga;
+    public TextMeshProUGUI carga, simbolotxt;
     void Start()
     {
         cortinilla.CrossFadeAlpha(0, 0, false);
         carga.CrossFadeAlpha(0, 0, false);
+        simbolotxt.CrossFadeAlpha(0, 0, false);
         DontDestroyOnLoad(gameObject);
     }
 
@@ -34,7 +35,7 @@ public class InicioLoad : MonoBehaviour
         a.allowSceneActivation = false;
         while (a.progress <= 0.9f)
         {
-
+            simbolotxt.CrossFadeAlpha(1,1.3f, false);
             carga.text = "Loading... " /*+ Mathf.FloorToInt(a.progress) + a.progress + "%"*/;
             Debug.Log(a.progress);
 
@@ -42,7 +43,8 @@ public class InicioLoad : MonoBehaviour
             {
 
                 carga.CrossFadeAlpha(0, 1.5f, false);
-                
+                simbolotxt.CrossFadeAlpha(0, 0, false);
+
                 yield return new WaitForSeconds(1f);
                 cortinilla.CrossFadeAlpha(1, 2, false);
                 
