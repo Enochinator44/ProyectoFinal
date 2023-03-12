@@ -11,7 +11,7 @@ public class ControlEscenaMenu : MonoBehaviour
     public GameObject goJugar,goOpciones,goExit;
     public Animator anim,playerAnim;
     public Image cortinillaFalsa;
-    public GameObject player;
+    public GameObject player, music;
     public int impulsoSalto;
     private AsyncOperation asyncOperation, asyncOperationb;
     public TextMeshProUGUI textCarga;
@@ -65,10 +65,12 @@ public class ControlEscenaMenu : MonoBehaviour
     }
     public void NewGame()
     {
+        music.SetActive(true);
         StartCoroutine(AnimacionSaltoNG());
     }
     public void LoadGame()
     {
+        music.SetActive(true);
         StartCoroutine(AnimacionSaltoLG());
     }
     public void OptionsButton()

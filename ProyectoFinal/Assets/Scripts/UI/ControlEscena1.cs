@@ -12,6 +12,7 @@ public class ControlEscena1 : MonoBehaviour
     public Image continuar,fondoContinuar,titulo;
     public Image cortinilla;
     public TextMeshProUGUI carga;
+    public GameObject music, music2, music3;
     void Start()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -36,9 +37,14 @@ public class ControlEscena1 : MonoBehaviour
         {
             if (Input.anyKeyDown)
             {
+                music3.SetActive(true);
+                music2.SetActive(false);
+                
                 CargasEscena();
                 continuar.CrossFadeAlpha(0f, 1f, false);
+                
                 fondoContinuar.CrossFadeAlpha(0, 1f, false);
+                music.SetActive(true);
             }
         }
       
