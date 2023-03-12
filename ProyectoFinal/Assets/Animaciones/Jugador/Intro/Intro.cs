@@ -5,16 +5,22 @@ using UnityEngine;
 public class Intro : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject player, cam;
+    public GameObject player, cam, music;
     void Start()
     {
         StartCoroutine("IntroAnim");
+        StartCoroutine("SE");
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    IEnumerator SE()
+    {
+        yield return new WaitForSeconds(1.5f);
+        music.SetActive(true);
     }
     IEnumerator IntroAnim()
     {

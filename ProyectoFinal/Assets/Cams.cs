@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Cams : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject cameraM, cam1, cam2, Fase, Player, Plat,Carga;
+    public GameObject cameraM, cam1, cam2, Fase, Player, Plat,Carga, aterrizaje, elevo;
    
    
     void Start()
@@ -36,9 +36,11 @@ public class Cams : MonoBehaviour
         Plat.SetActive(false);
         cameraM.SetActive(false);
         cam1.SetActive(true);
+        
         yield return new WaitForSeconds(1.50f);
         cam1.SetActive(false);
         cam2.SetActive(true);
+        elevo.SetActive(true );
         yield return new WaitForSeconds(5.30f);
         Carga.GetComponent<InicioLoad>().CargasEscena();
         

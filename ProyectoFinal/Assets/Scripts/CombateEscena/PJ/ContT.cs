@@ -231,7 +231,7 @@ public class ContT : MonoBehaviour
         {
             if (dashCool > 1)
             {
-                StartCoroutine(ActivateTrail(activeTime));
+                //StartCoroutine(ActivateTrail(activeTime));
                 StartCoroutine(DashCoroutine());
                 RastroDash();
                 dashCool = 0;
