@@ -9,7 +9,7 @@ TagManager:
   - Enemy
   - DestroyPlatform
   - Trigger
-  - Weapon
+  - Arma
   layers:
   - Default
   - TransparentFX
