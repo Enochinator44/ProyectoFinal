@@ -103,7 +103,7 @@ public class Controllador2 : MonoBehaviour
 
         //Debug.Log("Verical" + verticalVelocity + "Horizontal" + horizontalVelocity);
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.7f + 0.5f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         //Debug.Log(horizontalInput + "horizontalInput");
         //Debug.Log(verticalInput+"VerticalInput");
 
@@ -112,21 +112,16 @@ public class Controllador2 : MonoBehaviour
         SpeedControl();
         StateHandler();
 
-
-
         // handle drag
         if (grounded)
         {
-            anim.SetBool("isGrounded", true);
             state = Controllador2.MovementState.walking;
             Debug.Log(grounded + "suelo");
             rb.drag = groundDrag;
         }
         else
         {
-            anim.SetBool("isGrounded", false);
             state = Controllador2.MovementState.air;
-
         }
 
         if ( state == MovementState.grappling|| state==MovementState.air)
@@ -134,14 +129,7 @@ public class Controllador2 : MonoBehaviour
         else
             rb.drag = groundDrag;
 
-        if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.D))
-        {
-            anim.SetBool("Run", true);
-        }
-        else
-        {
-            anim.SetBool("Run", false);
-        }
+
 
     }
 

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Enemigo : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject  ProyectilActual, Player;
+    public GameObject  ProyectilActual, Player, interAnim;
     public float speedEnem, timing,  timing2;
     public GameObject[] movEnem, ProyectilF;
     public NavMeshAgent agente;
@@ -23,7 +24,7 @@ public class Enemigo : MonoBehaviour
     {
         EnemyAnimatorController = GetComponent<Animator>();
         EnemyAnimatorController.SetInteger("Cast", Random.Range(1, 3));
-        fase = 1;
+        
         
     }
 
@@ -33,10 +34,13 @@ public class Enemigo : MonoBehaviour
         
         
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, transform.eulerAngles.z);
-        if (fase == 1 && vProvisional <=0)
+        if (vProvisional <=0 && fase == 1)
         {
-            fase++;
-            vProvisional = 1000;
+            interAnim.SetActive(true);
+        }
+        if (vProvisional <= 0 && fase == 2)
+        {
+            SceneManager.LoadScene("Menu");
         }
         timing2 += Time.deltaTime;
         if (timing2 >= 15)
@@ -59,25 +63,25 @@ public class Enemigo : MonoBehaviour
             }
             timing2 = 0;
         }
-        if (fase == 1)
-        {
+       
             
 
 
-
-            if (timing > 3)
+        if (fase == 1)
+        {
+            if (timing > 5)
             {
                 exclusivo = Random.Range(1, 5);
 
                 if (ciclo != exclusivo)
                 {
-                    
-                    
+
+
                     ciclo = exclusivo;
                     transform.LookAt(Player.transform);
                     switch (ciclo)
                     {
-                        
+
                         case 1:
                             StartCoroutine("Proyectil1");
                             break;
@@ -93,13 +97,15 @@ public class Enemigo : MonoBehaviour
                         case 5:
                             StartCoroutine("Proyectil5");
                             break;
-                        
+
                     }
                 }
-
-
                 timing = 0;
             }
+        
+
+
+            
         }
         if (fase == 2)
         {
@@ -107,7 +113,7 @@ public class Enemigo : MonoBehaviour
 
 
 
-            if (timing > 3)
+            if (timing > 2)
             {
                 exclusivo = Random.Range(1, 7);
 
@@ -223,5 +229,12 @@ public class Enemigo : MonoBehaviour
         ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 6;
         yield return null;
     }
-   
+    private void OnTriggerEnter(Collider other)
+    {
+        
+            
+            vProvisional -= 10;
+        
+    }
+
 }

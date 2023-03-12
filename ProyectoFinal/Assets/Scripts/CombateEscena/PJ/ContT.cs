@@ -29,8 +29,7 @@ public class ContT : MonoBehaviour
     private bool muerto;
     public float activeTime = 2f;
     private bool isTrailActive;
-    public float meshRefreshRate = 0.1f;
-    private SkinnedMeshRenderer[] skinnedMeshRenderers;
+
 
     private Vector3 playerInput;
 
@@ -71,10 +70,8 @@ public class ContT : MonoBehaviour
 
     public Animator playerAnimatorController;
 
-    [Header("DealDamage")]
-    public GameObject daga, espada;
-    public float DañoActivo=1;
-    public float daño;
+
+
 
     void Start()
     {
@@ -204,8 +201,6 @@ public class ContT : MonoBehaviour
         {
             bCombo = true;
             StartCoroutine(Combos());
-            
-
 
             //AtaqueCargado
         }
@@ -236,15 +231,10 @@ public class ContT : MonoBehaviour
         {
             if (dashCool > 1)
             {
-                
+                //StartCoroutine(ActivateTrail(activeTime));
                 StartCoroutine(DashCoroutine());
                 RastroDash();
                 dashCool = 0;
-                if (!isTrailActive)
-                {
-                    isTrailActive = true;
-                 
-                }
             }
             
         }
@@ -271,14 +261,15 @@ public class ContT : MonoBehaviour
         {
             gamemanager.GetComponent<GameManager>().SlowMotionOff();
         }
- 
+        /*if(Input.GetKeyDown(KeyCode.Space) && trepar == true)
+        {
+            Animacion;
+        }*/
+
+
 
 
     }
-
-   
-  
-
 
 
     void SetGravity() //funcion para la gravedad
@@ -468,8 +459,6 @@ public class ContT : MonoBehaviour
         playerAnimatorController.SetBool("Ataque3", false);
         playerAnimatorController.SetBool("Ataque2", false);
         playerAnimatorController.SetBool("Ataque1", false);
-      
-
     }
     void AtaqueCargado()
     {
