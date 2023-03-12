@@ -162,7 +162,19 @@ public class Enemigo : MonoBehaviour
     {
         ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation);
         ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
-        
+        yield return new WaitForSeconds(1);
+        transform.LookAt(Player.transform);
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation);
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
+        yield return new WaitForSeconds(1);
+        transform.LookAt(Player.transform);
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation);
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
+        yield return new WaitForSeconds(1);
+        transform.LookAt(Player.transform);
+        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation);
+        ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 1;
+
         yield return null;
     }
     private IEnumerator Proyectil2()
@@ -186,7 +198,7 @@ public class Enemigo : MonoBehaviour
         {
             float angle = i * 72;
             Vector3 position = transform.position + Quaternion.Euler(0, angle, 0) * Vector3.forward * 2;
-            ProyectilActual = Instantiate(ProyectilF[0], position, Quaternion.identity);
+            ProyectilActual = Instantiate(ProyectilF[2], position, Quaternion.identity);
             ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 3;
             ProyectilActual.gameObject.GetComponent<ProyectilF>().angle = i*72;
         }
@@ -207,7 +219,7 @@ public class Enemigo : MonoBehaviour
     }
     private IEnumerator Proyectil5()
     {
-        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation);
+        ProyectilActual = Instantiate(ProyectilF[2], transform.position, transform.localRotation);
         ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 5;
 
         yield return null;
@@ -225,7 +237,7 @@ public class Enemigo : MonoBehaviour
     }
     private IEnumerator Proyectil7()
     {
-        ProyectilActual = Instantiate(ProyectilF[0], transform.position, transform.localRotation);
+        ProyectilActual = Instantiate(ProyectilF[2], transform.position, transform.localRotation);
         ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 6;
         yield return null;
     }
