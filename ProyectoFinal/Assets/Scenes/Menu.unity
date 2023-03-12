@@ -570,8 +570,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 330585545}
   continuar: {fileID: 0}
-  fondoContinuar: {fileID: 0}
-  titulo: {fileID: 0}
+  fondoContinuar: {fileID: 1091213290}
+  titulo: {fileID: 803658280}
   cortinilla: {fileID: 882204096}
   carga: {fileID: 1293637451}
 --- !u!1 &803658278

@@ -17,7 +17,7 @@ public class ContT : MonoBehaviour
     private bool Run;
     private bool left;
     private bool right;
-    public float dashtime=0.5f;
+    public float dashtime=0.35f;
     public float dashSpeed=5;
     public TimeManager timeManager;
     public float rotationSpeed;
@@ -231,6 +231,7 @@ public class ContT : MonoBehaviour
             if (dashCool > 1)
             {
                 StartCoroutine(DashCoroutine());
+                RastroDash();
                 dashCool = 0;
             }
             
@@ -330,7 +331,8 @@ public class ContT : MonoBehaviour
     {
 
         player.enabled = false;
-        playerAnimatorController.SetTrigger("Dash");
+        //playerAnimatorController.SetTrigger("Dash");
+        playerAnimatorController.SetBool("bDash", true);
 
         while (dashtime > 0)
         {
@@ -340,8 +342,8 @@ public class ContT : MonoBehaviour
             Debug.Log("dashtime");
             yield return null;  
         }
-
-        dashtime = 1;
+        playerAnimatorController.SetBool("bDash", false);
+        dashtime = 0.35f;
         player.enabled = true;
     }
    
@@ -503,6 +505,17 @@ public class ContT : MonoBehaviour
         yield return new WaitForSeconds(1.3f);
         Debug.Log("Escudook");
         escudo.SetActive(false);
+    }
+
+    public void RastroDash()
+    {
+        StartCoroutine(DashRastroCo());
+    }
+     public IEnumerator DashRastroCo()
+    {
+        player.GetComponent<TrailRenderer>().enabled = true;
+        yield return new WaitForSeconds(dashtime);
+        player.GetComponent<TrailRenderer>().enabled = false;
     }
 
   

@@ -23,7 +23,7 @@ public class ControlEscena1 : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         cortinilla.CrossFadeAlpha(0, 0, false);
-        continuar.CrossFadeAlpha(0, 0, false);
+        //continuar.CrossFadeAlpha(0, 0, false);
         fondoContinuar.CrossFadeAlpha(0, 0, false);
         titulo.CrossFadeAlpha(0, 0, false);
         carga.text = "";

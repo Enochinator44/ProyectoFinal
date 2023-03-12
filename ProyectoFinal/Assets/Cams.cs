@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class Cams : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject cameraM, cam1, cam2, Fase, Player, Plat;
+    public GameObject cameraM, cam1, cam2, Fase, Player, Plat,Carga;
+   
+   
     void Start()
+    {
+        
+    }
+    private void Awake()
     {
         
     }
@@ -33,7 +40,7 @@ public class Cams : MonoBehaviour
         cam1.SetActive(false);
         cam2.SetActive(true);
         yield return new WaitForSeconds(5.30f);
-        SceneManager.LoadScene("Fight");
+        Carga.GetComponent<InicioLoad>().CargasEscena();
         
     }
 }
