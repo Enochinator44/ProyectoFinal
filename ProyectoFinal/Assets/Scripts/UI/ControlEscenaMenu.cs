@@ -20,31 +20,33 @@ public class ControlEscenaMenu : MonoBehaviour
     private void Start()
     {
         cortinillaFalsa.CrossFadeAlpha(0, 0, false);
-        textCarga.CrossFadeAlpha(0, 0, false);
+        //textCarga.CrossFadeAlpha(0, 0, false);
         StartCoroutine(CorrutinaFalsaCo());
-        asyncOperation  = SceneManager.LoadSceneAsync(2);
+        asyncOperation = SceneManager.LoadSceneAsync(2);
         asyncOperation.allowSceneActivation = false;
-        asyncOperationb = SceneManager.LoadSceneAsync(3);
-        asyncOperationb.allowSceneActivation = false;
+        //asyncOperationb = SceneManager.LoadSceneAsync(3);
+        //asyncOperationb.allowSceneActivation = false;
 
     }
     private void Update()
     {
-        if (asyncOperation.progress >= 0.9)
-        {
-            textCarga.CrossFadeAlpha(0, 1.5f, false);
-            Debug.Log("Hola");
-        }
-        if (asyncOperation.progress<0.9)
-        {
-            textCarga.CrossFadeAlpha(1, 1.5f, false);
-            textCarga.text = "Loading...";
+        //if (asyncOperation.progress >= 0.9)
+        //{
             
-        }
+        //    textCarga.CrossFadeAlpha(0, 1.5f, false);
+        //    Debug.Log("Hola");
+        //}
+        //if (asyncOperation.progress<0.9)
+        //{
+        //    asyncOperation = SceneManager.LoadSceneAsync(2);
+        //    asyncOperation.allowSceneActivation = false;
+        //    textCarga.CrossFadeAlpha(1, 1.5f, false);
+        //    textCarga.text = "Loading...";
+            
+        //}
        
 
-        Debug.Log(asyncOperation.progress);
-        Debug.Log(asyncOperationb.progress);
+      
     }
     public void PlayButton()
     {
@@ -117,30 +119,30 @@ public class ControlEscenaMenu : MonoBehaviour
     }
     public IEnumerator AnimacionSaltoNG()
     {
-        if (asyncOperation.progress==0.9)
+        if (asyncOperation.progress==0.9f)
         {
+
             playerAnim.SetTrigger("Jump");
             yield return new WaitForSeconds(0.3f);
             player.GetComponent<Rigidbody>().AddForce(0, 0, impulsoSalto, ForceMode.Impulse);
+            cortinillaFalsa.CrossFadeAlpha(1, .7f, false);
             yield return new WaitForSeconds(.7f);
             asyncOperation.allowSceneActivation = true;
         }
+
        
-        
 
 
     }
     public IEnumerator AnimacionSaltoLG()
     {
-        if (asyncOperationb.progress==0.9)
-        {
-            playerAnim.SetTrigger("Jump");
-            yield return new WaitForSeconds(0.3f);
-            player.GetComponent<Rigidbody>().AddForce(0, 0, impulsoSalto, ForceMode.Impulse);
-            yield return new WaitForSeconds(.7f);
-            asyncOperationb.allowSceneActivation = true;
-        }
-        
+       
+        playerAnim.SetTrigger("Jump");
+        yield return new WaitForSeconds(0.3f);
+        player.GetComponent<Rigidbody>().AddForce(0, 0, impulsoSalto, ForceMode.Impulse);
+        yield return new WaitForSeconds(.7f);
+       
+
 
 
     }

@@ -22,12 +22,13 @@ public class ContT : MonoBehaviour
     public TimeManager timeManager;
     public float rotationSpeed;
     public Camera cameraShake;
-  
+   
 
    
 
     private bool muerto;
-
+    public float activeTime = 2f;
+    private bool isTrailActive;
 
 
     private Vector3 playerInput;
@@ -230,6 +231,7 @@ public class ContT : MonoBehaviour
         {
             if (dashCool > 1)
             {
+                StartCoroutine(ActivateTrail(activeTime));
                 StartCoroutine(DashCoroutine());
                 RastroDash();
                 dashCool = 0;
