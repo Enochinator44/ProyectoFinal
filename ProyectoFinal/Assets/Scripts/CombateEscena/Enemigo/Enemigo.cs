@@ -12,14 +12,17 @@ public class Enemigo : MonoBehaviour
     public NavMeshAgent agente;
     public int ciclo2, ciclo, exclusivo, fase;
     public float vProvisional, estado;
+
     Coroutine cProyectil1;
     public float[] min, max;
 
-    
+    private Animator EnemyAnimatorController;
     public int VelocidadL, VelocidadR;
     
     void Start()
     {
+        EnemyAnimatorController = GetComponent<Animator>();
+        EnemyAnimatorController.SetInteger("Cast", Random.Range(1, 3));
         fase = 1;
         
     }
@@ -28,7 +31,7 @@ public class Enemigo : MonoBehaviour
     void Update()
     {
         
-        transform.LookAt(Player.transform);
+        
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, transform.eulerAngles.z);
         if (fase == 1 && vProvisional <=0)
         {
@@ -38,17 +41,20 @@ public class Enemigo : MonoBehaviour
         timing2 += Time.deltaTime;
         if (timing2 >= 15)
         {
-            exclusivo = Random.Range(0, 6);
+            exclusivo = Random.Range(0, 5);
             while (exclusivo == ciclo2)
             {
-                exclusivo = Random.Range(1, 7);
+                exclusivo = Random.Range(0, 5);
             }
 
             if (ciclo2 != exclusivo)
             {
                 ciclo2 = exclusivo;
                 estado = ciclo2;
+                EnemyAnimatorController.SetTrigger("Dash");
                 agente.SetDestination(movEnem[ciclo2].transform.position);
+                EnemyAnimatorController.SetInteger("Cast", Random.Range(1, 3));
+                transform.LookAt(Player.transform);
 
             }
             timing2 = 0;
@@ -65,9 +71,13 @@ public class Enemigo : MonoBehaviour
 
                 if (ciclo != exclusivo)
                 {
+                    
+                    
                     ciclo = exclusivo;
+                    transform.LookAt(Player.transform);
                     switch (ciclo)
                     {
+                        
                         case 1:
                             StartCoroutine("Proyectil1");
                             break;
@@ -103,6 +113,7 @@ public class Enemigo : MonoBehaviour
 
                 if (ciclo != exclusivo)
                 {
+                    transform.LookAt(Player.transform);
                     ciclo = exclusivo;
                     switch (ciclo)
                     {
