@@ -223,4 +223,5 @@ public class Enemigo : MonoBehaviour
         ProyectilActual.gameObject.GetComponent<ProyectilF>().tipo = 6;
         yield return null;
     }
+   
 }
