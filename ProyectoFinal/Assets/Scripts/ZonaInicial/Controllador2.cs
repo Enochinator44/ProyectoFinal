@@ -103,7 +103,7 @@ public class Controllador2 : MonoBehaviour
 
         //Debug.Log("Verical" + verticalVelocity + "Horizontal" + horizontalVelocity);
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.7f + 0.5f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         //Debug.Log(horizontalInput + "horizontalInput");
         //Debug.Log(verticalInput+"VerticalInput");
 
