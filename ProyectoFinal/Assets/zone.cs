@@ -15,7 +15,7 @@ public class zone : MonoBehaviour
     void Update()
     {
         timing += Time.deltaTime;
-        if (timing >5)
+        if (timing >2)
         {
             Destroy(gameObject);
         }
